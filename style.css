@@ -1,0 +1,20 @@
+*{
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+body{
+	background: #fff;
+	/*font-family: 'Open Sans', Sans-serif;*/
+	/*font-family: 'Lato', Sans-serif;*/
+	font-family: 'Roboto', Sans-serif;
+	font-size: 16;
+}
+
+/*----------  HEADER  ----------*/
+
+header{
+	background: url('https://res.cloudinary.com/dtvhohvnu/image/upload/v1489090539/header_mwzsjp.png');
