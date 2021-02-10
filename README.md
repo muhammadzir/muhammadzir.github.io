@@ -3,6 +3,8 @@
 
 Login : http://google.net
 
+Silahkan logout/Keluar terlebih dahulu Dari voucher Demo dan login ulang dengan voucher di bawah ini
+
 <table class="container">
 	<thead>
 		<tr>
