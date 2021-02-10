@@ -1,6 +1,8 @@
 <h1><span class="blue">&lt;</span>KODE<span class="blue">&gt;</span> <span class="yellow">Voucher</pan></h1>
 <h2>PD. Semangat Jaya</a></h2>
 
+Login : http://google.net
+
 <table class="container">
 	<thead>
 		<tr>
