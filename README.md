@@ -1,9 +1,10 @@
 <h1><span class="blue">&lt;</span>KODE<span class="blue">&gt;</span> <span class="yellow">Voucher</pan></h1>
 <h2>PD. Semangat Jaya</a></h2>
 
-Login : http://google.net
 
-Silahkan logout/Keluar terlebih dahulu Dari voucher Demo dan login ulang dengan voucher di bawah ini
+Silahkanlogout/Keluar terlebih dahulu Dari voucher Demo dan login ulang dengan voucher di bawah ini
+
+Login/Logout => http://google.net
 
 <table class="container">
 	<thead>
