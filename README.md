@@ -15,37 +15,37 @@
 			<td>1</td>
 			<td>24 Jam</td>
 			<td>5GB</td>
-			<td>YCF85</td>
+			<td>XAV657</td>
 		</tr>
 		<tr>
 			<td>2</td>
 			<td>24 Jam</td>
 			<td>5GB</td>
-			<td>YSM48</td>
+			<td>TVU947</td>
 		</tr>
 		<tr>
 			<td>3</td>
 			<td>24 Jam</td>
 			<td>5GB</td>
-			<td>TFG66</td>
+			<td>XDN796</td>
 		</tr>
     <tr>
 			<td>4</td>
 			<td>24 Jam</td>
 			<td>5GB</td>
-			<td>MCS46</td>
+			<td>CJX284</td>
 		</tr>
     <tr>
 			<td>5</td>
 			<td>24 Jam</td>
 			<td>5GB</td>
-			<td>LBN76</td>
+			<td>NXZ399</td>
 		</tr>
     <tr>
 			<td>6</td>
 			<td>24 Jam</td>
 			<td>5GB</td>
-			<td>PCZ87</td>
+			<td>MMX539</td>
 		</tr>
 	</tbody>
 </table>
