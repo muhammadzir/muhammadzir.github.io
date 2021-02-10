@@ -4,10 +4,10 @@
 <table class="container">
 	<thead>
 		<tr>
-			<th><h3>No</h3></th>
-			<th><h3>Aktif</h3></th>
-			<th><h3>Limit</h3></th>
-			<th><h3>Kode Voucher</h3></th>
+			<th><h1>No</h1></th>
+			<th><h1>Aktif</h1></th>
+			<th><h1>Limit</h1></th>
+			<th><h1>Kode Voucher</h1></th>
 		</tr>
 	</thead>
 	<tbody>
