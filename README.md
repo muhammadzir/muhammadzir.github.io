@@ -6,6 +6,8 @@ Silahkanlogout/Keluar terlebih dahulu Dari voucher Demo dan login ulang dengan v
 
 Login/Logout => http://google.net
 
+Voucher expired tannggal 18 februari 2021
+
 <table class="container">
 	<thead>
 		<tr>
@@ -18,37 +20,37 @@ Login/Logout => http://google.net
 	<tbody>
 		<tr>
 			<td>1</td>
-			<td>24 Jam</td>
+			<td>7 Hari</td>
 			<td>5GB</td>
 			<td>VRR842</td>
 		</tr>
 		<tr>
 			<td>2</td>
-			<td>24 Jam</td>
+			<td>7 Hari</td>
 			<td>5GB</td>
 			<td>HYS929</td>
 		</tr>
 		<tr>
 			<td>3</td>
-			<td>24 Jam</td>
+			<td>7 Hari</td>
 			<td>5GB</td>
 			<td>BTL582</td>
 		</tr>
     <tr>
 			<td>4</td>
-			<td>24 Jam</td>
+			<td>7 Hari</td>
 			<td>5GB</td>
 			<td>BXL968</td>
 		</tr>
     <tr>
 			<td>5</td>
-			<td>24 Jam</td>
+			<td>7 Hari</td>
 			<td>5GB</td>
 			<td>JTA743</td>
 		</tr>
     <tr>
 			<td>6</td>
-			<td>24 Jam</td>
+			<td>7 Hari</td>
 			<td>5GB</td>
 			<td>HZH238</td>
 		</tr>
