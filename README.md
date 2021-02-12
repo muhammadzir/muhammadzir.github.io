@@ -6,7 +6,7 @@ Silahkanlogout/Keluar terlebih dahulu Dari voucher Demo dan login ulang dengan v
 
 Login/Logout => http://google.net
 
-Voucher expired tannggal 18 februari 2021
+Voucher expired tanggal 18 februari 2021
 
 <table class="container">
 	<thead>
