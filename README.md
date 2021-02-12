@@ -20,37 +20,37 @@ Login/Logout => http://google.net
 			<td>1</td>
 			<td>24 Jam</td>
 			<td>5GB</td>
-			<td>XAV657</td>
+			<td>VRR842</td>
 		</tr>
 		<tr>
 			<td>2</td>
 			<td>24 Jam</td>
 			<td>5GB</td>
-			<td>TVU947</td>
+			<td>HYS929</td>
 		</tr>
 		<tr>
 			<td>3</td>
 			<td>24 Jam</td>
 			<td>5GB</td>
-			<td>XDN796</td>
+			<td>BTL582</td>
 		</tr>
     <tr>
 			<td>4</td>
 			<td>24 Jam</td>
 			<td>5GB</td>
-			<td>CJX284</td>
+			<td>BXL968</td>
 		</tr>
     <tr>
 			<td>5</td>
 			<td>24 Jam</td>
 			<td>5GB</td>
-			<td>NXZ399</td>
+			<td>JTA743</td>
 		</tr>
     <tr>
 			<td>6</td>
 			<td>24 Jam</td>
 			<td>5GB</td>
-			<td>MMX539</td>
+			<td>HZH238</td>
 		</tr>
 	</tbody>
 </table>
