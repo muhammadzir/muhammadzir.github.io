@@ -2,7 +2,7 @@
 <h2>PD. Semangat Jaya</a></h2>
 
 
-Silahkanlogout/Keluar terlebih dahulu Dari voucher Demo dan login ulang dengan voucher di bawah ini
+Silahkan logout/Keluar terlebih dahulu Dari voucher Demo. dan login ulang dengan voucher di bawah ini
 
 Login/Logout => http://google.net
 
