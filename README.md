@@ -21,37 +21,37 @@ Voucher expired tannggal 18 februari 2021
 		<tr>
 			<td>1</td>
 			<td>7 Hari</td>
-			<td>5GB</td>
+			<td>21GB</td>
 			<td>TWX943</td>
 		</tr>
 		<tr>
 			<td>2</td>
 			<td>7 Hari</td>
-			<td>5GB</td>
+			<td>21GB</td>
 			<td>HZA254</td>
 		</tr>
 		<tr>
 			<td>3</td>
 			<td>7 Hari</td>
-			<td>5GB</td>
+			<td>21GB</td>
 			<td>ABN387</td>
 		</tr>
     <tr>
 			<td>4</td>
 			<td>7 Hari</td>
-			<td>5GB</td>
+			<td>21GB</td>
 			<td>FUG664</td>
 		</tr>
     <tr>
 			<td>5</td>
 			<td>7 Hari</td>
-			<td>5GB</td>
+			<td>21GB</td>
 			<td>VCJ966</td>
 		</tr>
     <tr>
 			<td>6</td>
 			<td>7 Hari</td>
-			<td>5GB</td>
+			<td>21GB</td>
 			<td>LMM648</td>
 		</tr>
 	</tbody>
