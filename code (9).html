@@ -1,0 +1,1663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zir | Personal Portfolio</title>
+    <style>
+        /* Base Styles */
+        :root {
+            --primary-bg: #e0e0e0;
+            --primary-color: #444;
+            --highlight-color: #5a5a5a;
+            --shadow-light: #ffffff;
+            --shadow-dark: #bebebe;
+            --border-radius: 15px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--primary-bg);
+            color: var(--primary-color);
+            min-height: 100vh;
+            padding: 0;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body.loading {
+            overflow: hidden;
+        }
+
+        /* Neumorphic Elements */
+        .neu-card {
+            background: var(--primary-bg);
+            border-radius: var(--border-radius);
+            box-shadow: 
+                8px 8px 16px var(--shadow-dark),
+                -8px -8px 16px var(--shadow-light);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: var(--transition);
+            border: none;
+        }
+
+        .neu-card:hover {
+            box-shadow: 
+                4px 4px 8px var(--shadow-dark),
+                -4px -4px 8px var(--shadow-light);
+        }
+
+        .neu-btn {
+            background: var(--primary-bg);
+            border: none;
+            border-radius: var(--border-radius);
+            box-shadow: 
+                4px 4px 8px var(--shadow-dark),
+                -4px -4px 8px var(--shadow-light);
+            padding: 0.8rem 1.5rem;
+            margin: 0.5rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        /* Smaller buttons for controls */
+        .neu-btn.control-btn {
+            padding: 0.6rem;
+            margin: 0;
+            font-size: 0.9rem;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .neu-btn:hover {
+            box-shadow: 
+                2px 2px 4px var(--shadow-dark),
+                -2px -2px 4px var(--shadow-light);
+        }
+
+        .neu-btn:active {
+            box-shadow: 
+                inset 4px 4px 8px var(--shadow-dark),
+                inset -4px -4px 8px var(--shadow-light);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 300px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background: var(--primary-bg);
+            padding: 2rem 1rem;
+            overflow-y: auto;
+            z-index: 1000;
+            transform: translateX(-100%);
+            transition: var(--transition);
+            box-shadow: 
+                8px 8px 16px var(--shadow-dark),
+                -8px -8px 16px var(--shadow-light);
+        }
+
+        .sidebar.active {
+            transform: translateX(0);
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            margin-top: 2rem;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 1rem;
+        }
+
+        .sidebar-nav .neu-btn {
+            width: 100%;
+            text-align: left;
+            justify-content: flex-start;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-profile-container {
+            position: relative;
+            display: inline-block;
+            margin: 1rem auto;
+        }
+
+        .sidebar-profile-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 
+                4px 4px 8px var(--shadow-dark),
+                -4px -4px 8px var(--shadow-light);
+        }
+
+        .sidebar-verified-badge {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            width: 20px;
+            height: 20px;
+            background: #1da1f2;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 
+                2px 2px 4px var(--shadow-dark),
+                -2px -2px 4px var(--shadow-light);
+            color: white;
+            font-size: 10px;
+        }
+
+        /* Menu Toggle */
+        .menu-toggle {
+            position: fixed;
+            left: 2rem;
+            top: 2rem;
+            z-index: 1002;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .main-content {
+            width: 100%;
+            min-height: 100vh;
+            transition: var(--transition);
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .sidebar {
+                width: 280px;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .skills-container {
+                justify-content: center;
+            }
+            
+            .profile-img {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .menu-toggle {
+                left: 1rem;
+                top: 1rem;
+            }
+            
+            .theme-toggle {
+                right: 1rem;
+                top: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0.5rem;
+            }
+            
+            .neu-card {
+                padding: 1rem;
+            }
+            
+            .sidebar {
+                width: 100%;
+            }
+            
+            .social-links {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .profile-container {
+            position: relative;
+            display: inline-block;
+            margin: 1rem auto;
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 
+                8px 8px 16px var(--shadow-dark),
+                -8px -8px 16px var(--shadow-light);
+            padding: 0.5rem;
+        }
+
+        .verified-badge {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            width: 32px;
+            height: 32px;
+            background: #1da1f2;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 
+                4px 4px 8px var(--shadow-dark),
+                -4px -4px 8px var(--shadow-light),
+                0 0 10px rgba(29, 161, 242, 0.3);
+            color: white;
+            font-size: 16px;
+            animation: verifiedPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes verifiedPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Responsive verified badge */
+        @media (max-width: 768px) {
+            .verified-badge {
+                width: 28px;
+                height: 28px;
+                font-size: 14px;
+                bottom: 6px;
+                right: 6px;
+            }
+        }
+
+        /* Sections */
+        section {
+            margin-bottom: 3rem;
+        }
+
+        h1, h2, h3 {
+            margin-bottom: 1rem;
+            color: var(--highlight-color);
+        }
+
+        /* Navigation */
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        /* Skills */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .skill-item {
+            margin: 0.5rem;
+        }
+
+        /* Projects */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            padding: 1.5rem;
+        }
+
+        .project-img {
+            width: 100%;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+        }
+
+        /* Contact Form */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .neu-input {
+            background: var(--primary-bg);
+            border: none;
+            border-radius: var(--border-radius);
+            box-shadow: 
+                inset 4px 4px 8px var(--shadow-dark),
+                inset -4px -4px 8px var(--shadow-light);
+            padding: 1rem;
+            width: 100%;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .neu-input:focus {
+            outline: none;
+            box-shadow: 
+                inset 2px 2px 4px var(--shadow-dark),
+                inset -2px -2px 4px var(--shadow-light);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+        }
+=======
+
+        /* Sections */
+        section {
+            margin-bottom: 3rem;
+        }
+
+        h1, h2, h3 {
+            margin-bottom: 1rem;
+            color: var(--highlight-color);
+        }
+
+        /* Navigation */
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        /* Skills */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .skill-item {
+            margin: 0.5rem;
+        }
+
+        /* Projects */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            padding: 1.5rem;
+        }
+
+        .project-img {
+            width: 100%;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+        }
+
+        /* Contact Form */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .neu-input {
+            background: var(--primary-bg);
+            border: none;
+            border-radius: var(--border-radius);
+            box-shadow: 
+                inset 4px 4px 8px var(--shadow-dark),
+                inset -4px -4px 8px var(--shadow-light);
+            padding: 1rem;
+            width: 100%;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .neu-input:focus {
+            outline: none;
+            box-shadow: 
+                inset 2px 2px 4px var(--shadow-dark),
+                inset -2px -2px 4px var(--shadow-light);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .social-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 
+                6px 6px 12px var(--shadow-dark),
+                -6px -6px 12px var(--shadow-light);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .social-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s;
+        }
+
+        .social-icon:hover::before {
+            left: 100%;
+        }
+
+        .social-icon:hover {
+            box-shadow: 
+                2px 2px 6px var(--shadow-dark),
+                -2px -2px 6px var(--shadow-light),
+                inset 1px 1px 3px rgba(255,255,255,0.3);
+            transform: translateY(-3px) scale(1.1);
+        }
+
+        .social-icon:active {
+            transform: translateY(0) scale(1.05);
+            box-shadow: 
+                inset 3px 3px 6px var(--shadow-dark),
+                inset -3px -3px 6px var(--shadow-light);
+        }
+
+        /* Individual Social Icon Colors */
+        .social-icon.linkedin:hover {
+            color: #0077b5;
+            box-shadow: 
+                2px 2px 6px var(--shadow-dark),
+                -2px -2px 6px var(--shadow-light),
+                0 0 15px rgba(0, 119, 181, 0.3);
+        }
+
+        .social-icon.github:hover {
+            color: #333;
+            box-shadow: 
+                2px 2px 6px var(--shadow-dark),
+                -2px -2px 6px var(--shadow-light),
+                0 0 15px rgba(51, 51, 51, 0.3);
+        }
+
+        .social-icon.twitter:hover {
+            color: #1da1f2;
+            box-shadow: 
+                2px 2px 6px var(--shadow-dark),
+                -2px -2px 6px var(--shadow-light),
+                0 0 15px rgba(29, 161, 242, 0.3);
+        }
+
+        .social-icon.behance:hover {
+            color: #1769ff;
+            box-shadow: 
+                2px 2px 6px var(--shadow-dark),
+                -2px -2px 6px var(--shadow-light),
+                0 0 15px rgba(23, 105, 255, 0.3);
+        }
+
+        /* Fixed Controls */
+        .theme-toggle,
+        .menu-toggle {
+            position: absolute;
+            z-index: 1002;
+            background: var(--primary-bg);
+            border-radius: var(--border-radius);
+            box-shadow: 
+                6px 6px 12px var(--shadow-dark),
+                -6px -6px 12px var(--shadow-light);
+            transition: var(--transition);
+        }
+
+        .theme-toggle {
+            right: 2rem;
+            top: 2rem;
+        }
+
+        .menu-toggle {
+            left: 2rem;
+            top: 2rem;
+        }
+
+        .theme-toggle:hover,
+        .menu-toggle:hover {
+            box-shadow: 
+                3px 3px 6px var(--shadow-dark),
+                -3px -3px 6px var(--shadow-light);
+        }
+
+        /* Theme Picker Dropdown */
+        .theme-picker {
+            position: fixed;
+            right: 2rem;
+            top: 5rem;
+            z-index: 1003;
+            background: var(--primary-bg);
+            border-radius: var(--border-radius);
+            box-shadow: 
+                8px 8px 16px var(--shadow-dark),
+                -8px -8px 16px var(--shadow-light);
+            padding: 1rem;
+            min-width: 180px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .theme-picker.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .theme-section {
+            margin-bottom: 1rem;
+        }
+
+        .theme-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .theme-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .theme-options {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+
+        .theme-option {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            box-shadow: 
+                3px 3px 6px var(--shadow-dark),
+                -3px -3px 6px var(--shadow-light);
+        }
+
+        .theme-option:hover {
+            transform: scale(1.1);
+            box-shadow: 
+                1px 1px 3px var(--shadow-dark),
+                -1px -1px 3px var(--shadow-light);
+        }
+
+        .theme-option.active {
+            border-color: var(--highlight-color);
+            transform: scale(1.2);
+        }
+
+        .theme-option.default { background: #e0e0e0; }
+        .theme-option.blue { background: #4299e1; }
+        .theme-option.green { background: #48bb78; }
+        .theme-option.purple { background: #9f7aea; }
+        .theme-option.pink { background: #ed64a6; }
+        .theme-option.orange { background: #ed8936; }
+
+        .mode-toggle {
+            width: 100%;
+            display: flex;
+            background: var(--primary-bg);
+            border-radius: var(--border-radius);
+            box-shadow: 
+                inset 2px 2px 4px var(--shadow-dark),
+                inset -2px -2px 4px var(--shadow-light);
+            padding: 0.3rem;
+            gap: 0.3rem;
+        }
+
+        .mode-btn {
+            flex: 1;
+            padding: 0.4rem;
+            border: none;
+            border-radius: calc(var(--border-radius) - 3px);
+            background: transparent;
+            color: var(--primary-color);
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .mode-btn.active {
+            background: var(--primary-bg);
+            box-shadow: 
+                2px 2px 4px var(--shadow-dark),
+                -2px -2px 4px var(--shadow-light);
+        }
+
+        /* Typing Animation */
+        .typing-text {
+            display: inline-block;
+            overflow: hidden;
+            border-right: 3px solid var(--highlight-color);
+            white-space: nowrap;
+            font-size: 1.2rem;
+            animation: blink-cursor 1s infinite;
+        }
+
+        .typing-char {
+            opacity: 0;
+            animation: typeIn 0.1s ease-in-out forwards;
+        }
+
+        @keyframes typeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes blink-cursor {
+            0%, 50% { border-color: var(--highlight-color); }
+            51%, 100% { border-color: transparent; }
+        }
+
+        /* Title Animation */
+        .title-text {
+            display: inline-block;
+            opacity: 0;
+            animation: fadeInBounce 0.8s ease-out forwards;
+        }
+
+        .title-char {
+            display: inline-block;
+            opacity: 0;
+            animation: bounceIn 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeInBounce {
+            0% {
+                opacity: 0;
+                transform: translateY(-30px) scale(0.8);
+            }
+            60% {
+                opacity: 1;
+                transform: translateY(5px) scale(1.05);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3) translateY(-50px);
+            }
+            50% {
+                opacity: 0.7;
+                transform: scale(1.1) translateY(5px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        /* Morphing Bubble Preloader */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-bg) 0%, #d5d5d5 50%, var(--primary-bg) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .preloader.fade-out {
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.8) rotate(180deg);
+        }
+
+        .loader {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            margin-bottom: 1.5rem;
+        }
+
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--primary-bg);
+            box-shadow: 
+                inset 8px 8px 16px var(--shadow-dark),
+                inset -8px -8px 16px var(--shadow-light),
+                4px 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .bubble:nth-child(1) {
+            width: 25px;
+            height: 25px;
+            top: 0;
+            left: 50%;
+            margin-left: -12.5px;
+            animation: morphBubble1 2s ease-in-out infinite;
+        }
+
+        .bubble:nth-child(2) {
+            width: 22px;
+            height: 22px;
+            top: 15px;
+            right: 0;
+            animation: morphBubble2 2s ease-in-out infinite 0.3s;
+        }
+
+        .bubble:nth-child(3) {
+            width: 28px;
+            height: 28px;
+            bottom: 0;
+            right: 10px;
+            animation: morphBubble3 2s ease-in-out infinite 0.6s;
+        }
+
+        .bubble:nth-child(4) {
+            width: 24px;
+            height: 24px;
+            bottom: 12px;
+            left: 0;
+            animation: morphBubble4 2s ease-in-out infinite 0.9s;
+        }
+
+        .bubble:nth-child(5) {
+            width: 20px;
+            height: 20px;
+            top: 12px;
+            left: 10px;
+            animation: morphBubble5 2s ease-in-out infinite 1.2s;
+        }
+
+        @keyframes morphBubble1 {
+            0%, 100% { transform: scale(1) translateY(0); }
+            25% { transform: scale(1.3) translateY(-10px); }
+            50% { transform: scale(0.8) translateY(5px); }
+            75% { transform: scale(1.1) translateY(-5px); }
+        }
+
+        @keyframes morphBubble2 {
+            0%, 100% { transform: scale(1) translateX(0); }
+            25% { transform: scale(0.7) translateX(-15px); }
+            50% { transform: scale(1.4) translateX(10px); }
+            75% { transform: scale(0.9) translateX(-5px); }
+        }
+
+        @keyframes morphBubble3 {
+            0%, 100% { transform: scale(1) translate(0, 0); }
+            25% { transform: scale(1.2) translate(-8px, -12px); }
+            50% { transform: scale(0.6) translate(15px, 8px); }
+            75% { transform: scale(1.5) translate(-3px, -6px); }
+        }
+
+        @keyframes morphBubble4 {
+            0%, 100% { transform: scale(1) translateY(0) rotate(0deg); }
+            25% { transform: scale(0.8) translateY(-8px) rotate(90deg); }
+            50% { transform: scale(1.3) translateY(12px) rotate(180deg); }
+            75% { transform: scale(1.1) translateY(-4px) rotate(270deg); }
+        }
+
+        @keyframes morphBubble5 {
+            0%, 100% { transform: scale(1) translate(0, 0); }
+            25% { transform: scale(1.6) translate(8px, 15px); }
+            50% { transform: scale(0.5) translate(-12px, -8px); }
+            75% { transform: scale(1.2) translate(5px, 3px); }
+        }
+
+        .loader-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--highlight-color);
+            letter-spacing: 0.15em;
+            animation: floatText 3s ease-in-out infinite alternate;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        @keyframes floatText {
+            0% { 
+                opacity: 0.6;
+                transform: translateY(0);
+                letter-spacing: 0.15em;
+            }
+            100% { 
+                opacity: 1;
+                transform: translateY(-5px);
+                letter-spacing: 0.25em;
+            }
+        }
+
+        .wave-progress {
+            position: relative;
+            width: 150px;
+            height: 6px;
+            background: var(--primary-bg);
+            border-radius: 15px;
+            box-shadow: 
+                inset 3px 3px 6px var(--shadow-dark),
+                inset -3px -3px 6px var(--shadow-light);
+            overflow: hidden;
+        }
+
+        .wave-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, 
+                transparent,
+                var(--highlight-color),
+                transparent);
+            border-radius: 20px;
+            transition: width 0.3s ease;
+            position: relative;
+        }
+
+        .wave-fill::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: 0;
+            width: 100%;
+            height: 12px;
+            background: linear-gradient(90deg,
+                transparent,
+                rgba(90, 90, 90, 0.3),
+                transparent);
+            border-radius: 20px;
+            animation: wave 1.5s ease-in-out infinite;
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: translateX(-100%) scaleX(0.5); }
+            50% { transform: translateX(0) scaleX(1); }
+        }
+
+        .progress-text {
+            margin-top: 0.6rem;
+            font-size: 0.75rem;
+            color: var(--primary-color);
+            opacity: 0.7;
+            font-weight: 500;
+        }
+
+        .floating-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--highlight-color);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 20%; animation-delay: 0.5s; }
+        .particle:nth-child(3) { left: 80%; animation-delay: 1s; }
+        .particle:nth-child(4) { left: 90%; animation-delay: 1.5s; }
+        .particle:nth-child(5) { left: 50%; animation-delay: 2s; }
+
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(100vh) scale(0); 
+                opacity: 0; 
+            }
+            10% { 
+                opacity: 0.6; 
+                transform: translateY(90vh) scale(1); 
+            }
+            90% { 
+                opacity: 0.6; 
+                transform: translateY(10vh) scale(1); 
+            }
+        }
+
+        /* Star Field Animation */
+        .star-field {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+            overflow: hidden;
+            display: none;
+        }
+
+        .star {
+            position: absolute;
+            color: #ffd700;
+            animation: twinkle 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.3; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .meteor {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: linear-gradient(45deg, #fff, #ffd700, #fff);
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ffd700;
+            animation: meteorFall 3s linear infinite;
+        }
+
+        @keyframes meteorFall {
+            0% {
+                transform: translateX(-50px) translateY(-50px) rotate(45deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            80% {
+                opacity: 1;
+                transform: translateX(80vw) translateY(80vh) rotate(45deg) scale(1);
+            }
+            90% {
+                opacity: 0.7;
+                transform: translateX(90vw) translateY(90vh) rotate(45deg) scale(1.5);
+                box-shadow: 0 0 30px #ffd700, 0 0 60px #ff8c00;
+            }
+            100% {
+                transform: translateX(100vw) translateY(100vh) rotate(45deg) scale(0);
+                opacity: 0;
+            }
+        }
+
+        .meteor::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -20px;
+            width: 20px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ffd700);
+            border-radius: 50%;
+        }
+
+        .meteor::after {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            width: 16px;
+            height: 16px;
+            background: radial-gradient(circle, 
+                rgba(255, 215, 0, 0.8) 0%, 
+                rgba(255, 140, 0, 0.6) 30%, 
+                rgba(255, 69, 0, 0.4) 60%, 
+                transparent 100%);
+            border-radius: 50%;
+            opacity: 0;
+            animation: naturalExplosion 3s linear infinite;
+        }
+
+        @keyframes naturalExplosion {
+            0%, 79% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            80% {
+                opacity: 0.3;
+                transform: scale(0.5);
+            }
+            90% {
+                opacity: 0.8;
+                transform: scale(2.5);
+            }
+            95% {
+                opacity: 0.4;
+                transform: scale(4);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(6);
+            }
+        }
+
+        .meteor::after {
+            content: '💥';
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            width: 30px;
+            height: 30px;
+            font-size: 2rem;
+            opacity: 0;
+            animation: explosionBurst 3s linear infinite;
+        }
+
+        @keyframes explosionBurst {
+            0%, 92% {
+                opacity: 0;
+                transform: scale(0) rotate(0deg);
+            }
+            93% {
+                opacity: 1;
+                transform: scale(0.8) rotate(45deg);
+            }
+            96% {
+                opacity: 1;
+                transform: scale(2) rotate(180deg);
+                filter: hue-rotate(45deg) saturate(2);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(4) rotate(360deg);
+                filter: hue-rotate(90deg) saturate(3);
+            }
+        }
+
+        /* Additional explosion particles */
+        .meteor {
+            position: relative;
+        }
+
+        .meteor:before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            width: 10px;
+            height: 10px;
+            background: radial-gradient(circle, #ff4500, #ff8c00, transparent);
+            border-radius: 50%;
+            opacity: 0;
+            animation: explosionRing 3s linear infinite;
+        }
+
+        @keyframes explosionRing {
+            0%, 91% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            92% {
+                opacity: 0.8;
+                transform: scale(1);
+            }
+            98% {
+                opacity: 0.3;
+                transform: scale(6);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(10);
+            }
+        }
+
+        .meteor:nth-child(1) { animation-delay: 0s; left: 10%; }
+        .meteor:nth-child(2) { animation-delay: 1s; left: 30%; }
+        .meteor:nth-child(3) { animation-delay: 2s; left: 60%; }
+        .meteor:nth-child(4) { animation-delay: 0.5s; left: 80%; }
+    </style>
+</head>
+<body class="loading">
+    <!-- Morphing Bubble Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="floating-particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+        <div class="loader">
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+        </div>
+        <div class="loader-text">Loading</div>
+        <div class="wave-progress">
+            <div class="wave-fill" id="waveFill"></div>
+        </div>
+        <div class="progress-text" id="progressText">0%</div>
+    </div>
+
+    <!-- Menu Toggle -->
+    <div class="menu-toggle">
+        <button id="menuToggle" class="neu-btn control-btn">☰</button>
+    </div>
+
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <button id="themeBtn" class="neu-btn control-btn">🎨</button>
+    </div>
+
+    <!-- Theme Picker -->
+    <div class="theme-picker" id="themePicker">
+        <div class="theme-section">
+            <div class="theme-title">Mode</div>
+            <div class="mode-toggle">
+                <button class="mode-btn active" id="lightMode">☀️ Light</button>
+                <button class="mode-btn" id="darkMode">🌙 Dark</button>
+            </div>
+        </div>
+        <div class="theme-section">
+            <div class="theme-title">Colors</div>
+            <div class="theme-options">
+                <div class="theme-option default active" data-theme="default"></div>
+                <div class="theme-option blue" data-theme="blue"></div>
+                <div class="theme-option green" data-theme="green"></div>
+                <div class="theme-option purple" data-theme="purple"></div>
+                <div class="theme-option pink" data-theme="pink"></div>
+                <div class="theme-option orange" data-theme="orange"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar neu-card" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-profile-container">
+                <img src="https://muhammadzir.github.io/img/profile-pic.jpg" alt="Zir's professional profile photo" class="sidebar-profile-img">
+                <div class="sidebar-verified-badge">✓</div>
+            </div>
+            <h3>Hey, I'm Zir</h3>
+            <p>Developer & Designer</p>
+        </div>
+        <ul class="sidebar-nav">
+            <li><button class="neu-btn" onclick="scrollToSection('about')">📖 About</button></li>
+            <li><button class="neu-btn" onclick="scrollToSection('skills')">🛠️ Skills</button></li>
+            <li><button class="neu-btn" onclick="scrollToSection('projects')">💼 Projects</button></li>
+            <li><button class="neu-btn" onclick="scrollToSection('contact')">📧 Contact</button></li>
+        </ul>
+    </aside>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Star Field -->
+    <div class="star-field" id="starField">
+        <div class="star" style="top: 10%; left: 15%; font-size: 1rem;">⭐</div>
+        <div class="star" style="top: 20%; left: 80%; font-size: 0.8rem;">✨</div>
+        <div class="star" style="top: 35%; left: 25%; font-size: 1.2rem;">⭐</div>
+        <div class="star" style="top: 50%; left: 70%; font-size: 0.9rem;">✨</div>
+        <div class="star" style="top: 65%; left: 40%; font-size: 1.1rem;">⭐</div>
+        <div class="star" style="top: 80%; left: 85%; font-size: 0.7rem;">✨</div>
+        <div class="star" style="top: 15%; left: 60%; font-size: 1rem;">⭐</div>
+        <div class="star" style="top: 75%; left: 20%; font-size: 0.9rem;">✨</div>
+        <div class="star" style="top: 45%; left: 50%; font-size: 1.1rem;">⭐</div>
+        <div class="star" style="top: 30%; left: 45%; font-size: 0.9rem;">✨</div>
+        <div class="star" style="top: 60%; left: 15%; font-size: 1rem;">⭐</div>
+        <div class="star" style="top: 85%; left: 55%; font-size: 0.8rem;">✨</div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
+
+        <!-- Header -->
+        <header class="neu-card">
+            <div class="profile-container">
+                <img src="https://muhammadzir.github.io/img/profile-pic.jpg" alt="Portrait of Zir, a professional looking individual with a confident expression" class="profile-img">
+                <div class="verified-badge">✓</div>
+            </div>
+            <h1 id="titleText">Hey, I'm Zir</h1>
+            <p class="typing-text" id="typingText"></p>
+            <div class="social-links">
+                <a href="#" class="social-icon linkedin">💼</a>
+                <a href="#" class="social-icon github">🔗</a>
+                <a href="#" class="social-icon twitter">🐦</a>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav>
+            <ul class="neu-card">
+                <li><button class="neu-btn" onclick="scrollToSection('about')">About</button></li>
+                <li><button class="neu-btn" onclick="scrollToSection('skills')">Skills</button></li>
+                <li><button class="neu-btn" onclick="scrollToSection('projects')">Projects</button></li>
+                <li><button class="neu-btn" onclick="scrollToSection('contact')">Contact</button></li>
+            </ul>
+        </nav>
+
+        <!-- About Section -->
+        <section id="about" class="neu-card">
+            <h2>About Me</h2>
+            <p>Hello! I'm Zir, a passionate developer and designer with a focus on creating beautiful, functional digital experiences. With years of experience in the industry, I've developed a unique approach that combines technical expertise with aesthetic sensibility.</p>
+            <p>My journey in tech began when I was young, and I've been obsessed with creating digital solutions ever since. I specialize in front-end development, UI/UX design, and creative coding.</p>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="neu-card">
+            <h2>Skills</h2>
+            <div class="skills-container">
+                <div class="skill-item">
+                    <button class="neu-btn">HTML5</button>
+                </div>
+                <div class="skill-item">
+                    <button class="neu-btn">CSS3</button>
+                </div>
+                <div class="skill-item">
+                    <button class="neu-btn">JavaScript</button>
+                </div>
+                <div class="skill-item">
+                    <button class="neu-btn">React</button>
+                </div>
+                <div class="skill-item">
+                    <button class="neu-btn">UI Design</button>
+                </div>
+                <div class="skill-item">
+                    <button class="neu-btn">UX Research</button>
+                </div>
+                <div class="skill-item">
+                    <button class="neu-btn">Figma</button>
+                </div>
+                <div class="skill-item">
+                    <button class="neu-btn">Node.js</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="neu-card">
+            <h2>Featured Projects</h2>
+            <div class="projects-grid">
+                <div class="neu-card project-card">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/81813b1a-4827-43e7-96c5-6d604dcfa126.png" alt="Dashboard interface showing analytics with clean UI design" class="project-img">
+                    <h3>Analytics Dashboard</h3>
+                    <p>A responsive analytics dashboard with interactive charts and customizable widgets.</p>
+                    <button class="neu-btn">View Project</button>
+                </div>
+                <div class="neu-card project-card">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/43720f2f-5505-4dfd-820e-1affd39eb953.png" alt="Mobile app interface with minimalist design and colorful elements" class="project-img">
+                    <h3>Fitness App</h3>
+                    <p>Mobile application for tracking workouts and nutrition with gamification elements.</p>
+                    <button class="neu-btn">View Project</button>
+                </div>
+                <div class="neu-card project-card">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/ea73dd2e-be44-4882-b4f9-022a903a2578.png" alt="E-commerce website with product listings and shopping cart" class="project-img">
+                    <h3>E-Commerce Platform</h3>
+                    <p>Complete online store with product management, cart system, and payment integration.</p>
+                    <button class="neu-btn">View Project</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="neu-card">
+            <h2>Get In Touch</h2>
+            <form>
+                <div class="form-group">
+                    <input type="text" class="neu-input" placeholder="Your Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" class="neu-input" placeholder="Your Email" required>
+                </div>
+                <div class="form-group">
+                    <textarea class="neu-input" rows="5" placeholder="Your Message" required></textarea>
+                </div>
+                <button type="submit" class="neu-btn">Send Message</button>
+            </form>
+        </section>
+
+        <!-- Footer -->
+        <footer class="neu-card">
+            <p>© 2023 Zir. All rights reserved.</p>
+        </footer>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scrolling with sidebar close
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({
+                behavior: 'smooth'
+            });
+            closeSidebar();
+        }
+
+        function closeSidebar() {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+
+        // Sidebar functionality
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        menuToggle.addEventListener('click', toggleSidebar);
+        overlay.addEventListener('click', closeSidebar);
+
+        // Close sidebar when clicking navigation links
+        document.querySelectorAll('.sidebar-nav .neu-btn').forEach(btn => {
+            btn.addEventListener('click', closeSidebar);
+        });
+
+        // Color theme system
+        const colorThemes = {
+            default: {
+                primaryBg: '#e0e0e0',
+                primaryColor: '#444',
+                highlightColor: '#5a5a5a',
+                shadowLight: '#ffffff',
+                shadowDark: '#bebebe'
+            },
+            blue: {
+                primaryBg: '#e6f3ff',
+                primaryColor: '#2c5282',
+                highlightColor: '#4299e1',
+                shadowLight: '#ffffff',
+                shadowDark: '#cbd5e0'
+            },
+            green: {
+                primaryBg: '#e6fffa',
+                primaryColor: '#276749',
+                highlightColor: '#48bb78',
+                shadowLight: '#ffffff',
+                shadowDark: '#c6f6d5'
+            },
+            purple: {
+                primaryBg: '#faf5ff',
+                primaryColor: '#553c9a',
+                highlightColor: '#9f7aea',
+                shadowLight: '#ffffff',
+                shadowDark: '#e9d8fd'
+            },
+            pink: {
+                primaryBg: '#fff5f7',
+                primaryColor: '#97266d',
+                highlightColor: '#ed64a6',
+                shadowLight: '#ffffff',
+                shadowDark: '#fed7e2'
+            },
+            orange: {
+                primaryBg: '#fffaf0',
+                primaryColor: '#9c4221',
+                highlightColor: '#ed8936',
+                shadowLight: '#ffffff',
+                shadowDark: '#feebc8'
+            }
+        };
+
+        let currentTheme = 'default';
+        let isDarkMode = false;
+
+        function applyTheme(themeName) {
+            const theme = colorThemes[themeName];
+            currentTheme = themeName;
+            
+            if (isDarkMode) {
+                // Apply dark versions
+                document.documentElement.style.setProperty('--primary-bg', '#2d3748');
+                document.documentElement.style.setProperty('--primary-color', '#f7fafc');
+                document.documentElement.style.setProperty('--highlight-color', theme.highlightColor);
+                document.documentElement.style.setProperty('--shadow-light', '#4a5568');
+                document.documentElement.style.setProperty('--shadow-dark', '#1a202c');
+            } else {
+                document.documentElement.style.setProperty('--primary-bg', theme.primaryBg);
+                document.documentElement.style.setProperty('--primary-color', theme.primaryColor);
+                document.documentElement.style.setProperty('--highlight-color', theme.highlightColor);
+                document.documentElement.style.setProperty('--shadow-light', theme.shadowLight);
+                document.documentElement.style.setProperty('--shadow-dark', theme.shadowDark);
+            }
+        }
+
+        // Theme picker functionality
+        const themeBtn = document.getElementById('themeBtn');
+        const themePicker = document.getElementById('themePicker');
+        const lightModeBtn = document.getElementById('lightMode');
+        const darkModeBtn = document.getElementById('darkMode');
+        
+        themeBtn.addEventListener('click', function() {
+            themePicker.classList.toggle('active');
+        });
+
+        // Mode toggle functionality
+        lightModeBtn.addEventListener('click', function() {
+            isDarkMode = false;
+            document.body.classList.remove('dark-theme');
+            lightModeBtn.classList.add('active');
+            darkModeBtn.classList.remove('active');
+            applyTheme(currentTheme);
+        });
+
+        darkModeBtn.addEventListener('click', function() {
+            isDarkMode = true;
+            document.body.classList.add('dark-theme');
+            darkModeBtn.classList.add('active');
+            lightModeBtn.classList.remove('active');
+            applyTheme(currentTheme);
+        });
+
+        // Color option selection
+        document.querySelectorAll('.theme-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const theme = this.dataset.theme;
+                
+                // Update active state
+                document.querySelectorAll('.theme-option').forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Apply theme
+                applyTheme(theme);
+            });
+        });
+
+        // Close theme picker when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!themeBtn.contains(e.target) && !themePicker.contains(e.target)) {
+                themePicker.classList.remove('active');
+            }
+        });
+
+        // Typing animation
+        const text = "Creative Developer & Designer";
+        const typingElement = document.getElementById('typingText');
+        let i = 0;
+
+        function typeWriter() {
+            if (i < text.length) {
+                typingElement.textContent += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            }
+        }
+
+        // Morphing Bubble Preloader functionality
+        let progress = 0;
+        const progressText = document.getElementById('progressText');
+        const preloader = document.getElementById('preloader');
+
+        const loadingSteps = [
+            'Initializing...',
+            'Loading Assets...',
+            'Setting up UI...',
+            'Preparing Content...',
+            'Almost Ready...',
+            'Complete!'
+        ];
+
+        let currentStep = 0;
+
+        function updateProgress() {
+            progress += Math.random() * 8 + 2;
+            if (progress > 100) progress = 100;
+            
+            document.getElementById('waveFill').style.width = progress + '%';
+            progressText.textContent = Math.round(progress) + '%';
+            
+            // Update loading text based on progress
+            const stepIndex = Math.floor((progress / 100) * (loadingSteps.length - 1));
+            if (stepIndex !== currentStep && stepIndex < loadingSteps.length) {
+                currentStep = stepIndex;
+                document.querySelector('.loader-text').textContent = loadingSteps[stepIndex];
+            }
+            
+            if (progress < 100) {
+                setTimeout(updateProgress, 200);
+            } else {
+                setTimeout(hidePreloader, 1000);
+            }
+        }
+
+        function hidePreloader() {
+            preloader.classList.add('fade-out');
+            document.body.classList.remove('loading');
+            setTimeout(() => {
+                preloader.style.display = 'none';
+                startAnimations();
+            }, 800);
+        }
+
+        function startAnimations() {
+            animateTitle();
+            setTimeout(() => {
+                typeWriter();
+            }, 1000);
+        }
+
+        // Title animation
+        function animateTitle() {
+            const titleElement = document.getElementById('titleText');
+            const titleText = titleElement.textContent;
+            titleElement.innerHTML = '';
+            
+            titleText.split('').forEach((char, index) => {
+                const span = document.createElement('span');
+                span.textContent = char === ' ' ? '\u00A0' : char;
+                span.className = 'title-char';
+                span.style.animationDelay = `${index * 0.1}s`;
+                titleElement.appendChild(span);
+            });
+        }
+
+        // Star field trigger (Easter egg)
+        let starClickCount = 0;
+        document.addEventListener('click', function(e) {
+            // Click counter for Easter egg
+            starClickCount++;
+            console.log('Click count:', starClickCount); // Debug log
+            
+            // Trigger star field after 5 clicks
+            if (starClickCount === 5) {
+                console.log('Showing star field!'); // Debug log
+                document.getElementById('starField').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('starField').style.display = 'none';
+                    starClickCount = 0; // Reset counter
+                }, 15000); // Hide after 15 seconds
+            }
+        });
+
+        // Start preloader
+        window.addEventListener('load', function() {
+            setTimeout(updateProgress, 500);
+        });
+    </script>
+</body>
+</html>
+
