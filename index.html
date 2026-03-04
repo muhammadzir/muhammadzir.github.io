@@ -33,7 +33,7 @@ body{background:var(--bg);overflow-x:hidden;position:relative}
 .sidebar.active{left:0}
 .sidebar h2{font-size:20px;margin-bottom:40px;background:var(--orange);padding:12px;border:6px solid #111;box-shadow:8px 8px 0 var(--shadow);transform:rotate(-3deg)}
 .sidebar a{display:block;margin-bottom:20px;text-decoration:none;font-weight:700;padding:12px;border:6px solid #111;background:white;box-shadow:6px 6px 0 var(--shadow);transform:rotate(2deg);transition:.15s;color:#111}
-.sidebar a:hover{transform:rotate(-2deg) translate(-6px,-6px);box-shadow:14px 14px 0 var(--shadow);animation:shake .2s infinite}
+.sidebar a:hover{transform:rotate(-2deg) translate(-6px,-6px)}
 .sidebar .close-btn{display:block;margin-bottom:20px;font-weight:800;background:var(--pink);border:6px solid #111;box-shadow:6px 6px 0 var(--shadow);padding:12px;cursor:pointer;text-align:center;transform:rotate(0deg)}
 .toggle{position:fixed;top:20px;left:20px;background:var(--pink);border:8px solid #111;padding:14px 20px;font-weight:800;cursor:pointer;box-shadow:10px 10px 0 var(--shadow);z-index:1100}
 .hero{padding:160px 10%;position:relative;opacity:1;transform:translateY(0)}
@@ -45,14 +45,11 @@ body{background:var(--bg);overflow-x:hidden;position:relative}
 #typing-text{border-right:4px solid #111;padding-right:5px;display:inline-block;white-space:pre-wrap;max-width:600px;overflow-wrap:break-word;font-size:18px;background:white;padding:20px;border:8px solid #111;box-shadow:10px 10px 0 var(--shadow);transform:rotate(-2deg);z-index:1}
 section{padding:120px 10%;opacity:0;transform:translateY(50px);transition:.8s}
 .section-title{font-size:42px;margin-bottom:60px;background:var(--orange);padding:18px;border:10px solid #111;box-shadow:14px 14px 0 var(--shadow);transform:rotate(-3deg);display:inline-block}
-.grid{display:flex;flex-wrap:wrap;gap:60px;perspective:1000px}
-.card{flex:1 1 280px;background:white;border:10px solid #111;padding:30px;box-shadow:16px 16px 0 var(--shadow);transition:.3s transform,.3s box-shadow;transform-style:preserve-3d;opacity:0;transform:translateY(50px)}
-.card:nth-child(odd){transform:rotate(-5deg) translateY(50px);background:var(--pink)}
-.card:nth-child(even){transform:rotate(6deg) translateY(50px);background:var(--green)}
-.card:hover{transform:rotateX(10deg) rotateY(10deg) translate(-10px,-10px);box-shadow:24px 24px 0 var(--shadow);animation:shake .2s infinite}
+.grid{display:flex;flex-wrap:wrap;gap:40px;perspective:1000px}
+.card{flex:1 1 100%;background:white;border:10px solid #111;padding:30px;box-shadow:16px 16px 0 var(--shadow);transition:.3s transform,.3s box-shadow;transform-style:preserve-3d;opacity:0;transform:translateY(50px)}
 .card.magnetic{transition:transform .2s}
 footer{padding:50px;text-align:center;font-weight:800;border-top:12px solid #111;background:var(--yellow);box-shadow:0 -10px 0 var(--shadow);opacity:0;transform:translateY(50px);transition:.8s}
-@keyframes shake{0%{transform:translate(0,0)}25%{transform:translate(-2px,2px)}50%{transform:translate(2px,-2px)}75%{transform:translate(-2px,1px)}100%{transform:translate(0,0)}}
+a{text-decoration:none;color:#111}
 @media(max-width:768px){.hero h1{font-size:42px}.hero{padding-top:120px}}
 </style>
 </head>
@@ -75,10 +72,11 @@ footer{padding:50px;text-align:center;font-weight:800;border-top:12px solid #111
 <div class="sidebar" id="sidebar">
   <div class="close-btn" id="closeBtn">X</div>
   <h2>MUHAMMAD ZIR</h2>
-  <a href="#hero" class="hover-sound">Home</a>
-  <a href="#projects" class="hover-sound">Projects</a>
-  <a href="#social" class="hover-sound" target="_blank" rel="noopener noreferrer">Social Media</a>
-  <a href="#contact" class="hover-sound">Contact</a>
+  <a href="#hero">Home</a>
+  <a href="#tools">Tools</a>
+  <a href="#projects">Projects</a>
+  <a href="#social">Social Media</a>
+  <a href="#contact">Contact</a>
 </div>
 
 <section class="hero" id="hero">
@@ -88,32 +86,46 @@ footer{padding:50px;text-align:center;font-weight:800;border-top:12px solid #111
   <p id="typing-text"></p>
 </section>
 
+<!-- Tools Section Single Card -->
+<section id="tools">
+  <div class="section-title">Tools</div>
+  <div class="grid">
+    <div class="card">
+      <ul style="list-style:disc; padding-left:40px; font-size:18px;">
+        <li><a href="https://zir.is-a.dev/tools/kalkulator/" target="_blank">Kalkulator</a></li>
+        <li><a href="https://code.visualstudio.com/" target="_blank">Visual Studio Code</a></li>
+        <li><a href="https://nodejs.org/" target="_blank">Node.js</a></li>
+        <li><a href="https://www.figma.com/" target="_blank">Figma</a></li>
+        <li><a href="https://github.com/" target="_blank">GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 <section id="projects">
   <div class="section-title">Projects</div>
   <div class="grid">
-    <div class="card hover-sound magnetic"><h3>Project Alpha</h3><p>Scalable backend architecture.</p></div>
-    <div class="card hover-sound magnetic"><h3>Project Beta</h3><p>Performance-driven UI system.</p></div>
-    <div class="card hover-sound magnetic"><h3>Project Gamma</h3><p>Realtime dashboard platform.</p></div>
+    <div class="card magnetic"><h3>Project Alpha</h3><p>Scalable backend architecture.</p></div>
+    <div class="card magnetic"><h3>Project Beta</h3><p>Performance-driven UI system.</p></div>
+    <div class="card magnetic"><h3>Project Gamma</h3><p>Realtime dashboard platform.</p></div>
   </div>
 </section>
 
 <section id="social">
   <div class="section-title">Social Media</div>
   <div class="grid">
-    <div class="card hover-sound magnetic"><h3>GitHub</h3><p><a href="https://github.com/muhammadzir" target="_blank">github.com/muhammadzir</a></p></div>
-    <div class="card hover-sound magnetic"><h3>TikTok</h3><p><a href="https://www.tiktok.com/@zirdxd" target="_blank">@zirdxd</a></p></div>
-    <div class="card hover-sound magnetic"><h3>Instagram</h3><p><a href="https://www.instagram.com/muhammad_zir" target="_blank">@muhammad_zir</a></p></div>
+    <div class="card magnetic"><h3>GitHub</h3><p><a href="https://github.com/muhammadzir" target="_blank">github.com/muhammadzir</a></p></div>
+    <div class="card magnetic"><h3>TikTok</h3><p><a href="https://www.tiktok.com/@zirdxd" target="_blank">@zirdxd</a></p></div>
+    <div class="card magnetic"><h3>Instagram</h3><p><a href="https://www.instagram.com/muhammad_zir" target="_blank">@muhammad_zir</a></p></div>
   </div>
 </section>
 
 <section id="contact">
   <div class="section-title">Contact</div>
-  <div class="card hover-sound magnetic"><h3>Email</h3><p><a href="mailto:muhammadzir7@gmail.com">muhammadzir7@gmail.com</a></p></div>
+  <div class="card magnetic"><h3>Email</h3><p><a href="mailto:muhammadzir7@gmail.com">muhammadzir7@gmail.com</a></p></div>
 </section>
 
 <footer id="footer"></footer>
-
-<audio id="hover-audio" src="https://www.soundjay.com/buttons/sounds/button-16.mp3" preload="auto"></audio>
 
 <script>
 (() => {
@@ -121,41 +133,28 @@ footer{padding:50px;text-align:center;font-weight:800;border-top:12px solid #111
         t = document.getElementById("toggleBtn"),
         n = document.getElementById("closeBtn"),
         o = document.getElementById("cursor"),
-        i = document.getElementById("hover-audio"),
         f = document.getElementById("footer");
-  
-  // cursor
+
   document.addEventListener("mousemove", c => { o.style.left = c.clientX + "px"; o.style.top = c.clientY + "px"; });
-  
-  // sidebar toggle
   t.addEventListener("click", () => { e.classList.add("active"); t.style.display = "none"; });
   n.addEventListener("click", () => { e.classList.remove("active"); t.style.display = "block"; });
 
-  // background parallax
   const a = document.querySelectorAll(".bg-block");
   window.addEventListener("scroll", () => { const c = window.scrollY; a.forEach((e,t)=>{e.style.transform=`translateY(${c*(.05*(t+1))}px) rotate(${15*(t+1)}deg)`}) });
 
-  // hover sound
-  document.querySelectorAll(".hover-sound").forEach(e=>{e.addEventListener("mouseenter",()=>{i.currentTime=0;i.play();a.forEach((t,n)=>{t.style.transition="transform .1s";t.style.transform+=` translate(${(Math.random()-.5)*20}px, ${(Math.random()-.5)*20}px)`;setTimeout(()=>{t.style.transition="transform .3s"},100)})})});
-
-  // particles
   const s=document.getElementById("particles-container");
   for(let c=0;c<30;c++){const t=document.createElement("div");t.classList.add("particle");t.style.left=100*Math.random()+"%";t.style.top=100*Math.random()+"%";t.style.width=4+8*Math.random()+"px";t.style.height=4+8*Math.random()+"px";t.style.background=["#FFD500","#FF3CAC","#29FF87","#3F6BFF","#FF7A00"][Math.floor(5*Math.random())];t.style.animationDuration=4+6*Math.random()+"s";s.appendChild(t)}
 
-  // magnetic cards
   const r=document.querySelectorAll(".card.magnetic");
   r.forEach(e=>{e.addEventListener("mousemove",t=>{const n=e.getBoundingClientRect(),o=t.clientX-n.left-n.width/2,i=t.clientY-n.top-n.height/2;e.style.transform=`rotateX(${-i/10}deg) rotateY(${o/10}deg) translateZ(0)`}); e.addEventListener("mouseleave",()=>{e.style.transform=""})});
 
-  // section reveal
   const l=document.querySelectorAll("section, .hero, .card, footer");
   l.forEach((e,t)=>{setTimeout(()=>{e.style.opacity="1"; e.style.transform="translateY(0)";},150*t)});
 
-  // typing text
-  const d="Fullstack Developer\nDesigning audacious interfaces\nand resilient systems.";
+  const d="Fullstack Developer\nBuilding resilient, audacious, scalable systems.";
   let u=0;
   (function e(){const t=document.getElementById("typing-text");u<d.length?(t.textContent+=d[u],u++,setTimeout(e,50)):null})();
 
-  // dynamic year footer
   f.textContent = `Copyright © ${new Date().getFullYear()} Build with ♥️ By. Muhammad Zir`;
 })();
 </script>
