@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalkulator</title>
+<style>
+    /* Reset */
+    * { margin:0; padding:0; box-sizing:border-box; font-family: 'Courier New', monospace; }
+
+    /* Body dengan gradient neon */
+    body {
+        background: linear-gradient(135deg, #2c003e, #ff00ff, #00ffff);
+        background-size: 300% 300%;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+        animation: bgShift 10s infinite alternate;
+    }
+
+    @keyframes bgShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    .calculator {
+        background: #111;
+        border: 4px solid #ff00ff;
+        border-radius: 16px;
+        width: 320px;
+        max-width: 100%;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        box-shadow: 8px 8px #00ffff;
+    }
+
+    .display {
+        background: #222;
+        border: 3px solid #00ff00;
+        border-radius: 8px;
+        padding: 15px;
+        font-size: 2rem;
+        text-align: right;
+        color: #0ff;
+        min-height: 60px;
+    }
+
+    .buttons {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+    }
+
+    button {
+        padding: 20px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        border: 3px solid #fff;
+        border-radius: 12px;
+        background: #111;
+        color: #fff;
+        cursor: pointer;
+        transition: all 0.2s;
+        box-shadow: 4px 4px #ff0000;
+    }
+
+    button:hover {
+        transform: translate(-2px,-2px);
+        box-shadow: 6px 6px #00ff00;
+        background: #222;
+        color: #ff0;
+    }
+
+    /* Responsive */
+    @media(max-width: 400px) {
+        .calculator {
+            width: 100%;
+            padding: 15px;
+        }
+
+        .display {
+            font-size: 1.5rem;
+            padding: 10px;
+        }
+
+        button {
+            padding: 15px;
+            font-size: 1rem;
+        }
+    }
+</style>
+</head>
+<body>
+<div class="calculator">
+    <div id="display" class="display">0</div>
+    <div class="buttons">
+        <button onclick="clearDisplay()">C</button>
+        <button onclick="appendValue('%')">%</button>
+        <button onclick="appendValue('/')">÷</button>
+        <button onclick="appendValue('*')">×</button>
+
+        <button onclick="appendValue('7')">7</button>
+        <button onclick="appendValue('8')">8</button>
+        <button onclick="appendValue('9')">9</button>
+        <button onclick="appendValue('-')">−</button>
+
+        <button onclick="appendValue('4')">4</button>
+        <button onclick="appendValue('5')">5</button>
+        <button onclick="appendValue('6')">6</button>
+        <button onclick="appendValue('+')">+</button>
+
+        <button onclick="appendValue('1')">1</button>
+        <button onclick="appendValue('2')">2</button>
+        <button onclick="appendValue('3')">3</button>
+        <button onclick="calculateResult()" style="grid-row: span 2; background:#ff0; color:#000;">=</button>
+
+        <button onclick="appendValue('0')" style="grid-column: span 2;">0</button>
+        <button onclick="appendValue('.')">.</button>
+    </div>
+</div>
+
+<script>
+let display = document.getElementById('display');
+let current = '';
+
+function appendValue(val) {
+    if(current === '0') current = '';
+    current += val;
+    display.textContent = current;
+}
+
+function clearDisplay() {
+    current = '';
+    display.textContent = '0';
+}
+
+function calculateResult() {
+    try {
+        let result = eval(current.replace('×','*').replace('÷','/'));
+        display.textContent = result;
+        current = result.toString();
+    } catch(e) {
+        display.textContent = 'Error';
+        current = '';
+    }
+}
+</script>
+</body>
+</html>
