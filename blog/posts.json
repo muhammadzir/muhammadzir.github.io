@@ -1,9 +1,9 @@
 [
   {
-    "title": "Belajar Node.js",
+    "title": "Test post",
     "date": "2026-03-01",
     "excerpt": "Tips & trik belajar Node.js untuk pemula.",
-    "link": "#"
+    "link": "/blog/posts/test.html"
   },
   {
     "title": "React vs Vue",
