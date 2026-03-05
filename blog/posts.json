@@ -3,7 +3,7 @@
     "title": "Test post",
     "date": "2026-03-01",
     "excerpt": "Ini deskripsi.",
-    "link": "/blog/posts/test.html"
+    "link": "https://zir.is-a.dev/blog/posts/test.html"
   },
   {
     "title": "React vs Vue",
