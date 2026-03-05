@@ -7,9 +7,13 @@
 <link rel="icon" href="https://zir.is-a.dev/img/IMG_20260304_195738_807.webp" type="image/webp">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet">
 <style>
-:root{--yellow:#FFD500;--pink:#FF3CAC;--green:#29FF87;--blue:#3F6BFF;--orange:#FF7A00;--shadow:#000000;--bg:#FFF6E9}
+:root{
+  --yellow:#FFD500;--pink:#FF3CAC;--green:#29FF87;--blue:#3F6BFF;--orange:#FF7A00;--shadow:#000;--bg:#FFF6E9;
+}
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Space Grotesk',sans-serif;cursor:none}
-body{background:var(--bg);overflow-x:hidden;position:relative}
+html, body {height: 100%;margin: 0;display: flex;flex-direction: column;}
+body{background:var(--bg);overflow-x:hidden;position:relative;padding-bottom:70px;}
+body > *:not(.bottom-bar):not(.floating-shape):not(.floating-icon){flex:1 0 auto;}
 .cursor{width:22px;height:22px;border:3px solid #111;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .05s linear}
 .bg-block{position:fixed;z-index:-1;border:8px solid #111;box-shadow:12px 12px 0 var(--shadow)}
 .block1{width:320px;height:320px;background:var(--yellow);top:60px;right:-60px;transform:rotate(15deg)}
@@ -20,40 +24,175 @@ body{background:var(--bg);overflow-x:hidden;position:relative}
 .floating-shape.shape2{width:100px;height:100px;top:40%;left:70%;background:var(--green);animation-duration:25s}
 .floating-shape.shape3{width:120px;height:120px;top:70%;left:30%;background:var(--pink);animation-duration:18s}
 @keyframes floatShape{0%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(15px,-15px) rotate(45deg)}100%{transform:translate(-15px,15px) rotate(0deg)}}
-.particle{position:absolute;width:8px;height:8px;border-radius:50%;opacity:.8;animation:particleAnim 5s linear infinite}
-@keyframes particleAnim{0%{transform:translateY(0) rotate(0deg);opacity:.8}100%{transform:translateY(-800px) rotate(360deg);opacity:0}}
-.floating-icon{position:absolute;width:32px;height:32px;background:var(--orange);border-radius:50%;border:4px solid #111;box-shadow:6px 6px 0 var(--shadow);animation:floatAnim 8s infinite alternate ease-in-out;z-index:2}
-.floating-icon:nth-child(1){top:20%;left:10%;animation-delay:0s}
-.floating-icon:nth-child(2){top:50%;left:70%;animation-delay:2s}
-.floating-icon:nth-child(3){top:30%;left:40%;animation-delay:4s}
-.floating-icon:nth-child(4){top:70%;left:20%;animation-delay:1s}
-.floating-icon:nth-child(5){top:80%;left:60%;animation-delay:3s}
+
+.floating-icon{position:absolute;width:32px;height:32px;border-radius:50%;border:4px solid #111;box-shadow:6px 6px 0 var(--shadow);animation:floatAnim 8s infinite alternate ease-in-out;z-index:0;opacity:0.4;}
+.floating-icon.shape1{width:32px;height:32px;top:5%;left:5%;background:var(--orange);}
+.floating-icon.shape2{top:80%;left:10%;background:var(--green);}
+.floating-icon.shape3{top:10%;right:5%;background:var(--pink);}
+.floating-icon.shape4{top:75%;right:15%;background:var(--blue);}
+.floating-icon.shape5{bottom:5%;left:50%;background:var(--yellow);}
 @keyframes floatAnim{0%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(15px,-15px) rotate(15deg)}100%{transform:translate(-15px,15px) rotate(-15deg)}}
-.sidebar{position:fixed;left:-260px;top:0;width:260px;height:100vh;background:var(--green);border-right:10px solid #111;box-shadow:10px 0 0 var(--shadow);padding:40px 20px;transition:.3s;z-index:1000}
-.sidebar.active{left:0}
-.sidebar h2{font-size:20px;margin-bottom:40px;background:var(--orange);padding:12px;border:6px solid #111;box-shadow:8px 8px 0 var(--shadow);transform:rotate(-3deg)}
-.sidebar a{display:block;margin-bottom:20px;text-decoration:none;font-weight:700;padding:12px;border:6px solid #111;background:white;box-shadow:6px 6px 0 var(--shadow);transform:rotate(2deg);transition:.15s;color:#111}
-.sidebar a:hover{transform:rotate(-2deg) translate(-6px,-6px)}
-.sidebar .close-btn{display:block;margin-bottom:20px;font-weight:800;background:var(--pink);border:6px solid #111;box-shadow:6px 6px 0 var(--shadow);padding:12px;cursor:pointer;text-align:center;transform:rotate(0deg)}
-.toggle{position:fixed;top:20px;left:20px;background:var(--pink);border:8px solid #111;padding:14px 20px;font-weight:800;cursor:pointer;box-shadow:10px 10px 0 var(--shadow);z-index:1100}
-.hero{padding:160px 10%;position:relative;opacity:1;transform:translateY(0)}
+
+.hero,section{padding:160px 10%;opacity:0;transform:translateY(50px);transition:.8s}
+section{display:none}
+.section-title{font-size:42px;margin-bottom:60px;background:var(--orange);padding:18px;border:10px solid #111;box-shadow:14px 14px 0 var(--shadow);transform:rotate(-3deg);display:inline-block}
+.grid{display:flex;flex-wrap:wrap;gap:40px;perspective:1000px}
+.card{flex:1 1 100%;background:white;border:10px solid #111;padding:30px;box-shadow:16px 16px 0 var(--shadow);transition:.3s transform,.3s box-shadow;transform-style:preserve-3d}
+.card.magnetic{transition:transform .2s}
+.card.magnetic:hover{transform: scale(1.03) rotate(-2deg); box-shadow: 20px 20px 0 var(--shadow); transition: transform .2s, box-shadow .2s;}
 .profile{width:180px;height:180px;border-radius:50%;border:10px solid #111;overflow:hidden;box-shadow:14px 14px 0 var(--shadow);transform:rotate(-8deg);margin-bottom:40px;z-index:1;transition:transform .2s}
 .profile img{width:100%;height:100%;object-fit:cover}
-.hero h1,.hero h2,.hero p{display:inline-block;transition:transform .2s}
 .hero h1{font-size:70px;font-weight:800;background:var(--blue);padding:25px;border:12px solid #111;box-shadow:18px 18px 0 var(--shadow);transform:rotate(-4deg);margin-bottom:25px;z-index:1}
 .hero h2{font-size:32px;background:var(--yellow);padding:12px 20px;border:8px solid #111;box-shadow:12px 12px 0 var(--shadow);transform:rotate(3deg);display:inline-block;margin-bottom:30px;z-index:1}
 #typing-text{border-right:4px solid #111;padding-right:5px;display:inline-block;white-space:pre-wrap;max-width:600px;overflow-wrap:break-word;font-size:18px;background:white;padding:20px;border:8px solid #111;box-shadow:10px 10px 0 var(--shadow);transform:rotate(-2deg);z-index:1}
-section{padding:120px 10%;opacity:0;transform:translateY(50px);transition:.8s}
-.section-title{font-size:42px;margin-bottom:60px;background:var(--orange);padding:18px;border:10px solid #111;box-shadow:14px 14px 0 var(--shadow);transform:rotate(-3deg);display:inline-block}
-.grid{display:flex;flex-wrap:wrap;gap:40px;perspective:1000px}
-.card{flex:1 1 100%;background:white;border:10px solid #111;padding:30px;box-shadow:16px 16px 0 var(--shadow);transition:.3s transform,.3s box-shadow;transform-style:preserve-3d;opacity:0;transform:translateY(50px)}
-.card.magnetic{transition:transform .2s}
-footer{padding:50px;text-align:center;font-weight:800;border-top:12px solid #111;background:var(--yellow);box-shadow:0 -10px 0 var(--shadow);opacity:0;transform:translateY(50px);transition:.8s}
-a{text-decoration:none;color:#111}
-@media(max-width:768px){.hero h1{font-size:42px}.hero{padding-top:120px}}
+
+/* Top Strip Relative */
+.top-strip{
+  position: relative;
+  width: auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:6px 20px;
+  background:var(--yellow);
+  border-bottom:6px solid #111;
+  box-shadow:0 6px 0 var(--shadow);
+  z-index:1001;
+  font-size:14px;
+  font-weight:800;
+  transform:rotate(-1deg);
+  margin-bottom:40px;
+}
+.top-strip .mini-cta{
+  background:var(--pink);
+  border:4px solid #111;
+  padding:4px 8px;
+  font-weight:800;
+  cursor:pointer;
+  transform:rotate(2deg);
+  transition: transform .2s;
+}
+.top-strip .mini-cta:hover{
+  transform:rotate(-2deg) translateY(-2px);
+}
+
+/* Top-left social icons → digeser kebawah */
+.top-social-icons{
+  position:fixed;
+  top:50px; 
+  left:12px;
+  display:flex;
+  gap:12px;
+  z-index:1002;
+}
+.social-icon{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  width:40px;
+  height:40px;
+  border:4px solid #FFD500;
+  box-shadow:6px 6px 0 var(--shadow);
+  border-radius:50%;
+  font-weight:800;
+  color:white;
+  text-decoration:none;
+  background: var(--pink);
+  transform:rotate(-3deg);
+  transition: transform .2s, background .2s, color .2s;
+}
+.social-icon:hover{
+  transform:rotate(3deg) scale(1.1);
+  background: var(--yellow);
+  color:#111;
+  box-shadow:8px 8px 0 var(--shadow);
+}
+
+/* Footer */
+footer{
+  flex-shrink:0;
+  text-align:center;
+  font-weight:800;
+  border-top:12px solid #111;
+  background:var(--yellow);
+  box-shadow:0 -10px 0 var(--shadow);
+  padding:10px 10px;
+  z-index:1000;
+}
+footer .card{
+  flex:1 1 auto;
+  font-size:14px;
+  padding:8px 12px;
+  border:6px solid #111;
+  box-shadow:8px 8px 0 var(--shadow);
+  margin:5px auto;
+  max-width:400px;
+  background: var(--yellow);
+  color: #111;
+  z-index:1100;
+}
+
+/* Bottom Bar */
+.bottom-bar {
+  position: fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 1200;
+  background: var(--yellow);
+  padding: 6px 0;
+  border-top: 6px solid #111;
+  box-shadow: 0 -6px 0 var(--shadow);
+}
+.bottom-bar button {
+  padding: 6px 8px;
+  font-weight: 800;
+  background: var(--pink);
+  border: 4px solid #111;
+  box-shadow: 4px 4px 0 var(--shadow);
+  transform: rotate(-2deg);
+  cursor: pointer;
+  transition: transform .15s;
+  font-size:12px;
+}
+.bottom-bar button:hover {
+  transform: rotate(2deg) translate(-4px,-4px);
+}
+.bottom-bar button.active {
+  background: var(--green);
+  transform: rotate(0deg) translateY(-2px);
+  box-shadow: 6px 6px 0 var(--shadow);
+}
+
+/* Mobile adjustments */
+@media(max-width:768px){
+  .hero h1{font-size:42px}
+  .hero{padding-top:200px}
+  .bottom-bar button{padding:4px 6px;font-size:10px}
+  .social-icon{width:32px;height:32px;font-size:12px;border:3px solid #111;box-shadow:4px 4px 0 var(--shadow)}
+  .top-social-icons{gap:8px;top:40px;left:8px} 
+  /* Footer fix mobile agar terlihat di atas bottom bar */
+  body{
+    padding-bottom:220px; /* ruang ekstra supaya footer card tidak tertutup bottom bar */
+  }
+  footer .card{
+    font-size:12px; 
+    padding:6px 10px;
+    max-width:300px;
+    margin-top:0;      /* reset margin */
+    margin-bottom:120px; /* dorong card ke atas dari bottom */
+    background: var(--yellow);
+    color: #111;
+    z-index:1100; 
+  }
+}
 </style>
 </head>
 <body>
+
 <div class="cursor" id="cursor"></div>
 <div class="bg-block block1"></div>
 <div class="bg-block block2"></div>
@@ -61,22 +200,21 @@ a{text-decoration:none;color:#111}
 <div class="floating-shape shape1"></div>
 <div class="floating-shape shape2"></div>
 <div class="floating-shape shape3"></div>
-<div class="floating-icon"></div>
-<div class="floating-icon"></div>
-<div class="floating-icon"></div>
-<div class="floating-icon"></div>
-<div class="floating-icon"></div>
-<div id="particles-container"></div>
+<div class="floating-icon shape1"></div>
+<div class="floating-icon shape2"></div>
+<div class="floating-icon shape3"></div>
+<div class="floating-icon shape4"></div>
+<div class="floating-icon shape5"></div>
 
-<div class="toggle" id="toggleBtn">☰</div>
-<div class="sidebar" id="sidebar">
-  <div class="close-btn" id="closeBtn">X</div>
-  <h2>MUHAMMAD ZIR</h2>
-  <a href="#hero">Home</a>
-  <a href="#tools">Tools</a>
-  <a href="#projects">Projects</a>
-  <a href="#social">Social Media</a>
-  <a href="#contact">Contact</a>
+<div class="top-strip">
+  <span>🌐 Online | Available for Projects | ⏰ Flexible Hours</span>
+  <button class="mini-cta">Hire Me</button>
+</div>
+
+<div class="top-social-icons">
+  <a href="https://github.com/muhammadzir" target="_blank" class="social-icon">G</a>
+  <a href="https://www.tiktok.com/@zirdxd" target="_blank" class="social-icon">T</a>
+  <a href="https://www.instagram.com/muhammad_zir" target="_blank" class="social-icon">I</a>
 </div>
 
 <section class="hero" id="hero">
@@ -86,14 +224,13 @@ a{text-decoration:none;color:#111}
   <p id="typing-text"></p>
 </section>
 
-<!-- Tools Section Single Card -->
 <section id="tools">
   <div class="section-title">Tools</div>
   <div class="grid">
     <div class="card">
-      <ul style="list-style:disc; padding-left:40px; font-size:18px;">
-        <li><a href="https://zir.is-a.dev/tools/kalkulator/" target="_blank">Kalkulator</a></li>
-        <li><a href="https://code.visualstudio.com/" target="_blank">Visual Studio Code</a></li>
+      <ul style="list-style:disc;padding-left:40px;font-size:18px;">
+        <li><a href="https://git-scm.com/" target="_blank">Git</a></li>
+        <li><a href="https://code.visualstudio.com/" target="_blank">VS Code</a></li>
         <li><a href="https://nodejs.org/" target="_blank">Node.js</a></li>
         <li><a href="https://www.figma.com/" target="_blank">Figma</a></li>
         <li><a href="https://github.com/" target="_blank">GitHub</a></li>
@@ -125,37 +262,76 @@ a{text-decoration:none;color:#111}
   <div class="card magnetic"><h3>Email</h3><p><a href="mailto:muhammadzir7@gmail.com">muhammadzir7@gmail.com</a></p></div>
 </section>
 
-<footer id="footer"></footer>
+<footer id="footer">
+  <div class="card">
+    Copyright © <span id="year"></span> Build with ♥️ By. Muhammad Zir
+  </div>
+</footer>
+
+<div class="bottom-bar">
+  <button data-target="#tools">Tools</button>
+  <button data-target="#projects">Projects</button>
+  <button data-target="#hero">Home</button>
+  <button data-target="#social">Social</button>
+  <button data-target="#contact">Contact</button>
+</div>
 
 <script>
 (() => {
-  const e = document.getElementById("sidebar"),
-        t = document.getElementById("toggleBtn"),
-        n = document.getElementById("closeBtn"),
-        o = document.getElementById("cursor"),
-        f = document.getElementById("footer");
+  const cursor = document.getElementById("cursor");
+  document.addEventListener("mousemove", e => {cursor.style.left=e.clientX+"px";cursor.style.top=e.clientY+"px";});
 
-  document.addEventListener("mousemove", c => { o.style.left = c.clientX + "px"; o.style.top = c.clientY + "px"; });
-  t.addEventListener("click", () => { e.classList.add("active"); t.style.display = "none"; });
-  n.addEventListener("click", () => { e.classList.remove("active"); t.style.display = "block"; });
+  const sections = document.querySelectorAll("section");
+  function showSection(id){
+    sections.forEach(sec => {sec.style.display="none"; sec.style.opacity=0; sec.style.transform="translateY(50px)";});
+    const target = document.querySelector(id);
+    target.style.display="block";
+    setTimeout(()=>{target.style.opacity=1;target.style.transform="translateY(0)";},50);
+  }
 
-  const a = document.querySelectorAll(".bg-block");
-  window.addEventListener("scroll", () => { const c = window.scrollY; a.forEach((e,t)=>{e.style.transform=`translateY(${c*(.05*(t+1))}px) rotate(${15*(t+1)}deg)`}) });
+  const bottomButtons = document.querySelectorAll('.bottom-bar button');
+  bottomButtons.forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      bottomButtons.forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      showSection(btn.dataset.target);
+    });
+  });
+  document.querySelector('.bottom-bar button[data-target="#hero"]').classList.add('active');
+  showSection("#hero");
 
-  const s=document.getElementById("particles-container");
-  for(let c=0;c<30;c++){const t=document.createElement("div");t.classList.add("particle");t.style.left=100*Math.random()+"%";t.style.top=100*Math.random()+"%";t.style.width=4+8*Math.random()+"px";t.style.height=4+8*Math.random()+"px";t.style.background=["#FFD500","#FF3CAC","#29FF87","#3F6BFF","#FF7A00"][Math.floor(5*Math.random())];t.style.animationDuration=4+6*Math.random()+"s";s.appendChild(t)}
+  const blocks = document.querySelectorAll(".bg-block");
+  window.addEventListener("scroll",()=>{
+    const sc = window.scrollY;
+    blocks.forEach((b,i)=>{b.style.transform=`translateY(${sc*(.05*(i+1))}px) rotate(${15*(i+1)}deg)`});
+  });
 
-  const r=document.querySelectorAll(".card.magnetic");
-  r.forEach(e=>{e.addEventListener("mousemove",t=>{const n=e.getBoundingClientRect(),o=t.clientX-n.left-n.width/2,i=t.clientY-n.top-n.height/2;e.style.transform=`rotateX(${-i/10}deg) rotateY(${o/10}deg) translateZ(0)`}); e.addEventListener("mouseleave",()=>{e.style.transform=""})});
+  const cards = document.querySelectorAll(".card.magnetic");
+  cards.forEach(card=>{
+    card.addEventListener("mousemove",e=>{
+      const rect=card.getBoundingClientRect();
+      const x=e.clientX-rect.left-rect.width/2;
+      const y=e.clientY-rect.top-rect.height/2;
+      card.style.transform=`rotateX(${-y/10}deg) rotateY(${x/10}deg) translateZ(0)`;
+    });
+    card.addEventListener("mouseleave",()=>{card.style.transform=""});
+  });
 
-  const l=document.querySelectorAll("section, .hero, .card, footer");
-  l.forEach((e,t)=>{setTimeout(()=>{e.style.opacity="1"; e.style.transform="translateY(0)";},150*t)});
+  const typingText="Fullstack Developer\nBuilding resilient, audacious, scalable systems.";
+  let idx=0;
+  (function type(){const t=document.getElementById("typing-text");if(idx<typingText.length){t.textContent+=typingText[idx];idx++;setTimeout(type,50)}})();
 
-  const d="Fullstack Developer\nBuilding resilient, audacious, scalable systems.";
-  let u=0;
-  (function e(){const t=document.getElementById("typing-text");u<d.length?(t.textContent+=d[u],u++,setTimeout(e,50)):null})();
+  document.getElementById("year").textContent = new Date().getFullYear();
 
-  f.textContent = `Copyright © ${new Date().getFullYear()} Build with ♥️ By. Muhammad Zir`;
+  const floatingShapes = document.querySelectorAll('.floating-shape, .floating-icon');
+  setInterval(()=>{
+    floatingShapes.forEach(shape=>{
+      const x=(Math.random()-0.5)*20;
+      const y=(Math.random()-0.5)*20;
+      const r=(Math.random()-0.5)*10;
+      shape.style.transform=`translate(${x}px,${y}px) rotate(${r}deg)`;
+    });
+  },4000);
 })();
 </script>
 </body>
