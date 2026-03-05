@@ -31,6 +31,7 @@ body > *:not(.bottom-bar):not(.floating-shape):not(.floating-icon){flex:1 0 auto
 .floating-icon.shape4{top:75%;right:15%;background:var(--blue);}
 .floating-icon.shape5{bottom:5%;left:50%;background:var(--yellow);}
 @keyframes floatAnim{0%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(15px,-15px) rotate(15deg)}100%{transform:translate(-15px,15px) rotate(-15deg)}}
+
 .hero,section{padding:160px 10%;opacity:0;transform:translateY(50px);transition:.8s}
 section{display:none}
 .section-title{font-size:42px;margin-bottom:60px;background:var(--orange);padding:18px;border:10px solid #111;box-shadow:14px 14px 0 var(--shadow);transform:rotate(-3deg);display:inline-block}
@@ -43,6 +44,7 @@ section{display:none}
 .hero h1{font-size:70px;font-weight:800;background:var(--blue);padding:25px;border:12px solid #111;box-shadow:18px 18px 0 var(--shadow);transform:rotate(-4deg);margin-bottom:25px;z-index:1}
 .hero h2{font-size:32px;background:var(--yellow);padding:12px 20px;border:8px solid #111;box-shadow:12px 12px 0 var(--shadow);transform:rotate(3deg);display:inline-block;margin-bottom:30px;z-index:1}
 #typing-text{border-right:4px solid #111;padding-right:5px;display:inline-block;white-space:pre-wrap;max-width:600px;overflow-wrap:break-word;font-size:18px;background:white;padding:20px;border:8px solid #111;box-shadow:10px 10px 0 var(--shadow);transform:rotate(-2deg);z-index:1}
+
 /* Top Strip Relative */
 .top-strip{
   position: relative;
@@ -72,6 +74,8 @@ section{display:none}
 .top-strip .mini-cta:hover{
   transform:rotate(-2deg) translateY(-2px);
 }
+
+/* Top-left social icons → digeser kebawah */
 .top-social-icons{
   position:fixed;
   top:50px; 
@@ -84,8 +88,7 @@ section{display:none}
   display:flex;
   justify-content:center;
   align-items:center;
-  width:40px;
-  height:40px;
+  width:40px;height:40px;
   border:4px solid #FFD500;
   box-shadow:6px 6px 0 var(--shadow);
   border-radius:50%;
@@ -102,6 +105,7 @@ section{display:none}
   color:#111;
   box-shadow:8px 8px 0 var(--shadow);
 }
+
 /* Footer */
 footer{
   flex-shrink:0;
@@ -125,6 +129,7 @@ footer .card{
   color: #111;
   z-index:1100;
 }
+
 /* Bottom Bar */
 .bottom-bar {
   position: fixed;
@@ -159,6 +164,7 @@ footer .card{
   transform: rotate(0deg) translateY(-2px);
   box-shadow: 6px 6px 0 var(--shadow);
 }
+
 /* Mobile adjustments */
 @media(max-width:768px){
   .hero h1{font-size:42px}
@@ -167,16 +173,7 @@ footer .card{
   .social-icon{width:32px;height:32px;font-size:12px;border:3px solid #111;box-shadow:4px 4px 0 var(--shadow)}
   .top-social-icons{gap:8px;top:40px;left:8px} 
   body{padding-bottom:220px;}
-  footer .card{
-    font-size:12px; 
-    padding:6px 10px;
-    max-width:300px;
-    margin-top:0;
-    margin-bottom:120px;
-    background: var(--yellow);
-    color: #111;
-    z-index:1100; 
-  }
+  footer .card{font-size:12px;padding:6px 10px;max-width:300px;margin-top:0;margin-bottom:120px;background: var(--yellow);color:#111;z-index:1100;}
 }
 </style>
 </head>
@@ -213,27 +210,13 @@ footer .card{
   <p id="typing-text"></p>
 </section>
 
-<section id="tools">
-  <div class="section-title">Tools</div>
-  <div class="grid">
-    <div class="card">
-      <ul style="list-style:disc;padding-left:40px;font-size:18px;">
-        <li><a href="https://git-scm.com/" target="_blank">Git</a></li>
-        <li><a href="https://code.visualstudio.com/" target="_blank">VS Code</a></li>
-        <li><a href="https://nodejs.org/" target="_blank">Node.js</a></li>
-        <li><a href="https://www.figma.com/" target="_blank">Figma</a></li>
-        <li><a href="https://github.com/" target="_blank">GitHub</a></li>
-      </ul>
-    </div>
+<section id="blog">
+  <div class="section-title">Blog</div>
+  <div class="grid" id="blog-posts">
+    <!-- Post cards akan dimasukkan lewat JS -->
   </div>
 </section>
 
-<section id="blog">
-  <div class="section-title">Blog Terbaru</div>
-  <div class="grid" id="blog-grid">
-    <!-- JS akan generate card di sini -->
-  </div>
-</section>
 <section id="projects">
   <div class="section-title">Projects</div>
   <div class="grid">
@@ -242,7 +225,6 @@ footer .card{
     <div class="card magnetic"><h3>Project Gamma</h3><p>Realtime dashboard platform.</p></div>
   </div>
 </section>
-
 <section id="social">
   <div class="section-title">Social Media</div>
   <div class="grid">
@@ -264,27 +246,38 @@ footer .card{
 </footer>
 
 <div class="bottom-bar">
-  <button data-target="#tools">Tools</button>
+  <button data-target="#blog">Blog</button>
   <button data-target="#projects">Projects</button>
   <button data-target="#hero">Home</button>
-  <button data-target="#blog">Blog</button>
   <button data-target="#social">Social</button>
   <button data-target="#contact">Contact</button>
 </div>
 
 <script>
 (() => {
+  // Cursor
   const cursor = document.getElementById("cursor");
-  document.addEventListener("mousemove", e => {cursor.style.left=e.clientX+"px";cursor.style.top=e.clientY+"px";});
+  document.addEventListener("mousemove", e => {
+    cursor.style.left=e.clientX+"px";
+    cursor.style.top=e.clientY+"px";
+  });
 
+  // Sections
   const sections = document.querySelectorAll("section");
   function showSection(id){
-    sections.forEach(sec => {sec.style.display="none"; sec.style.opacity=0; sec.style.transform="translateY(50px)";});
+    sections.forEach(sec => {
+      sec.style.display="none"; 
+      sec.style.opacity=0; 
+      sec.style.transform="translateY(50px)";
+    });
     const target = document.querySelector(id);
-    target.style.display="block";
-    setTimeout(()=>{target.style.opacity=1;target.style.transform="translateY(0)";},50);
+    if(target){
+      target.style.display="block";
+      setTimeout(()=>{target.style.opacity=1; target.style.transform="translateY(0)";},50);
+    }
   }
 
+  // Bottom-bar buttons
   const bottomButtons = document.querySelectorAll('.bottom-bar button');
   bottomButtons.forEach(btn=>{
     btn.addEventListener('click',()=>{
@@ -296,12 +289,14 @@ footer .card{
   document.querySelector('.bottom-bar button[data-target="#hero"]').classList.add('active');
   showSection("#hero");
 
+  // Background blocks scroll
   const blocks = document.querySelectorAll(".bg-block");
   window.addEventListener("scroll",()=>{
     const sc = window.scrollY;
     blocks.forEach((b,i)=>{b.style.transform=`translateY(${sc*(.05*(i+1))}px) rotate(${15*(i+1)}deg)`});
   });
 
+  // Magnetic cards hover
   const cards = document.querySelectorAll(".card.magnetic");
   cards.forEach(card=>{
     card.addEventListener("mousemove",e=>{
@@ -313,12 +308,22 @@ footer .card{
     card.addEventListener("mouseleave",()=>{card.style.transform=""});
   });
 
+  // Typing effect
   const typingText="Fullstack Developer\nBuilding resilient, audacious, scalable systems.";
   let idx=0;
-  (function type(){const t=document.getElementById("typing-text");if(idx<typingText.length){t.textContent+=typingText[idx];idx++;setTimeout(type,50)}})();
+  (function type(){
+    const t=document.getElementById("typing-text");
+    if(idx<typingText.length){
+      t.textContent+=typingText[idx];
+      idx++;
+      setTimeout(type,50);
+    }
+  })();
 
+  // Year
   document.getElementById("year").textContent = new Date().getFullYear();
 
+  // Floating shapes
   const floatingShapes = document.querySelectorAll('.floating-shape, .floating-icon');
   setInterval(()=>{
     floatingShapes.forEach(shape=>{
@@ -329,23 +334,19 @@ footer .card{
     });
   },4000);
 
-  // ==== Fetch Blog Posts from JSON ====
-  async function loadPosts(){
-    try{
-      const res = await fetch('/blog/posts.json');
-      const posts = await res.json();
-      const blogGrid = document.getElementById('blog-grid');
-      posts.forEach(post=>{
+  // Load blog posts from JSON
+  const blogContainer = document.getElementById('blog-posts');
+  fetch('/blog/posts.json')
+    .then(res=>res.json())
+    .then(posts=>{
+      posts.forEach(p=>{
         const card = document.createElement('div');
         card.className='card magnetic';
-        card.innerHTML=`<h3>${post.title}</h3><p>${post.excerpt}</p><a href="${post.url}" target="_blank">Read More →</a>`;
-        blogGrid.appendChild(card);
+        card.innerHTML=`<h3>${p.title}</h3><p>${p.excerpt}</p><a href="${p.url}" target="_blank">Read More</a>`;
+        blogContainer.appendChild(card);
       });
-    } catch(err){
-      console.error("Failed to load posts.json:", err);
-    }
-  }
-  loadPosts();
+    }).catch(e=>console.error('Failed to load posts.json', e));
+
 })();
 </script>
 </body>
