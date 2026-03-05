@@ -1,3 +1,9 @@
-title: Blog - Muhammad Zir
-description: Welcome to my blog
+title: "Muhammad Zir"
+email: "muhammadzir7@gmail.com"
+description: "Personal website & blog"
+baseurl: "" # kalau pakai user.github.io ini kosong
+url: "https://muhammadzir.github.io"
+
 theme: minima
+plugins:
+  - jekyll-feed
