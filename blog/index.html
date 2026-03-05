@@ -1,13 +1,19 @@
 ---
 layout: default
-title: Blog - Muhammad Zir
+title: Blog Muhammad Zir
 ---
 
+<link rel="stylesheet" href="/assets/blog.css">
+
 <h1>Blog Muhammad Zir</h1>
-<ul>
+<div class="blog-grid">
   {% for post in site.posts %}
-    <li>
-      <a href="{{ post.url }}">{{ post.title }}</a> - {{ post.date | date: "%d %b %Y" }}
-    </li>
+  <div class="blog-card">
+    <a href="{{ post.url }}">
+      <h2>{{ post.title }}</h2>
+      <p class="date">{{ post.date | date: "%d %b %Y" }}</p>
+      <p class="excerpt">{{ post.excerpt | strip_html | truncate: 120 }}</p>
+    </a>
+  </div>
   {% endfor %}
-</ul>
+</div>
