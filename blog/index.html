@@ -1,55 +1,74 @@
----
-layout: default
-title: Blog Muhammad Zir
----
-
-<link rel="stylesheet" href="/assets/blog.css">
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog Muhammad Zir</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --yellow:#FFD500;--pink:#FF3CAC;--green:#29FF87;--blue:#3F6BFF;--orange:#FF7A00;--shadow:#000;--bg:#FFF6E9;
 }
-body{margin:0;padding:0;font-family:'Space Grotesk',sans-serif;background:var(--bg);overflow-x:hidden;}
-h1,h2,h3,p{margin:0;padding:0;}
-a{text-decoration:none;color:inherit;}
-.blog-grid{display:flex;flex-wrap:wrap;gap:40px;justify-content:center;perspective:1000px;margin-top:40px;}
-.blog-card{background:white;border:10px solid #111;padding:30px;box-shadow:16px 16px 0 var(--shadow);transition:.3s transform,.3s box-shadow;transform-style:preserve-3d;width:300px;}
-.blog-card.magnetic{transition:transform .2s;}
-.blog-card.magnetic:hover{transform:scale(1.03) rotate(-2deg); box-shadow: 20px 20px 0 var(--shadow);}
-.blog-card h2{font-size:24px;margin-bottom:10px;background:var(--blue);padding:12px;border:6px solid #111;box-shadow:8px 8px 0 var(--shadow);transform:rotate(-2deg);display:inline-block;}
-.blog-card .date{font-size:12px;font-weight:800;margin-bottom:10px;color:#555;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Space Grotesk',sans-serif;}
+body{background:var(--bg);overflow-x:hidden;position:relative;padding-bottom:70px;}
+h1,h2,h3,p,a{margin:0;padding:0;text-decoration:none;color:#111;}
+.blog-grid{display:flex;flex-wrap:wrap;gap:30px;justify-content:center;}
+.blog-card{flex:1 1 300px;background:white;border:10px solid #111;padding:20px;box-shadow:16px 16px 0 var(--shadow);transition:.3s transform,.3s box-shadow;transform-style:preserve-3d;}
+.blog-card.magnetic:hover{transform: scale(1.03) rotate(-2deg); box-shadow: 20px 20px 0 var(--shadow);}
+.blog-card h2{font-size:24px;margin-bottom:10px;}
+.blog-card .date{font-size:12px;color:#555;margin-bottom:8px;}
 .blog-card .excerpt{font-size:16px;}
-section.blog-container{padding:80px 10%;position:relative;}
-#cursor{width:22px;height:22px;border:3px solid #111;border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .05s linear;}
-.floating-shape{position:absolute;border:6px solid #111;box-shadow:6px 6px 0 var(--shadow);border-radius:6px;opacity:.3;}
-@media(max-width:768px){.blog-card{width:90%;padding:20px;}}
+.section-title{font-size:42px;margin-bottom:40px;background:var(--orange);padding:18px;border:10px solid #111;box-shadow:14px 14px 0 var(--shadow);transform:rotate(-3deg);display:inline-block;margin-left:10px;}
+/* Bottom Bar */
+.bottom-bar {
+  position: fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background: var(--yellow);
+  padding: 6px 0;
+  border-top:6px solid #111;
+  box-shadow:0 -6px 0 var(--shadow);
+  z-index:1200;
+}
+.bottom-bar button {
+  padding:6px 12px;
+  font-weight:800;
+  background:var(--pink);
+  border:4px solid #111;
+  box-shadow:4px 4px 0 var(--shadow);
+  transform:rotate(-2deg);
+  cursor:pointer;
+  transition: transform .15s;
+  font-size:14px;
+}
+.bottom-bar button:hover{transform:rotate(2deg) translate(-4px,-4px);}
 </style>
+</head>
+<body>
 
-<section class="blog-container">
-  <h1>Blog Muhammad Zir</h1>
-  <div class="blog-grid">
-    {% for post in site.posts %}
-    <div class="blog-card magnetic">
-      <a href="{{ post.url }}">
-        <h2>{{ post.title }}</h2>
-        <p class="date">{{ post.date | date: "%d %b %Y" }}</p>
-        <p class="excerpt">{{ post.excerpt | strip_html | truncate: 120 }}</p>
-      </a>
-    </div>
-    {% endfor %}
+<h1 class="section-title">Blog Muhammad Zir</h1>
+<div class="blog-grid">
+  {% for post in site.posts %}
+  <div class="blog-card magnetic">
+    <a href="{{ post.url }}">
+      <h2>{{ post.title }}</h2>
+      <p class="date">{{ post.date | date: "%d %b %Y" }}</p>
+      <p class="excerpt">{{ post.excerpt | strip_html | truncate: 120 }}</p>
+    </a>
   </div>
-</section>
+  {% endfor %}
+</div>
+
+<!-- Bottom Bar -->
+<div class="bottom-bar">
+  <button id="btn-home">🏠 Home</button>
+</div>
 <script>
 (() => {
-  // Cursor custom
-  const cursor = document.createElement("div");
-  cursor.id = "cursor";
-  document.body.appendChild(cursor);
-  document.addEventListener("mousemove", e => {
-    cursor.style.left = e.clientX + "px";
-    cursor.style.top = e.clientY + "px";
-  });
-
   // Magnetic hover effect untuk card blog
   const cards = document.querySelectorAll(".blog-card.magnetic");
   cards.forEach(card => {
@@ -62,6 +81,11 @@ section.blog-container{padding:80px 10%;position:relative;}
     card.addEventListener("mouseleave", () => {
       card.style.transform = "";
     });
+  });
+
+  // Tombol Home
+  document.getElementById("btn-home").addEventListener("click", ()=>{
+    window.location.href = "/index.html"; // kembali ke homepage
   });
 
   // Floating shapes dekoratif
@@ -78,6 +102,12 @@ section.blog-container{padding:80px 10%;position:relative;}
     div.style.top = d.top;
     div.style.left = d.left;
     div.style.background = d.bg;
+    div.style.position = "absolute";
+    div.style.border = "6px solid #111";
+    div.style.boxShadow = "6px 6px 0 var(--shadow)";
+    div.style.borderRadius = "6px";
+    div.style.opacity = 0.5;
+    div.style.animation = "floatShape linear infinite";
     div.style.animationDuration = (20+i*5)+"s";
     document.body.appendChild(div);
   });
@@ -93,3 +123,9 @@ section.blog-container{padding:80px 10%;position:relative;}
   },4000);
 })();
 </script>
+
+<style>
+@keyframes floatShape{0%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(15px,-15px) rotate(45deg)}100%{transform:translate(-15px,15px) rotate(0deg)}}
+</style>
+</body>
+</html>
