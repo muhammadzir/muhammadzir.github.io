@@ -89,8 +89,7 @@ section{display:none}
   display:flex;
   justify-content:center;
   align-items:center;
-  width:40px;
-  height:40px;
+  width:40px;height:40px;
   border:4px solid #FFD500;
   box-shadow:6px 6px 0 var(--shadow);
   border-radius:50%;
@@ -210,7 +209,6 @@ footer .card{
   <h2>Fullstack Developer</h2>
   <p id="typing-text"></p>
 </section>
-  
 
 <section id="tools">
   <div class="section-title">Blog Terbaru</div>
@@ -218,7 +216,7 @@ footer .card{
     {% for post in site.posts %}
       <div class="card magnetic">
         <h3>{{ post.title }}</h3>
-        <p>{{ post.excerpt }}</p>
+        <p>{{ post.content | strip_html | truncate:100 }}</p>
         <a href="{{ post.url }}">Read More</a>
       </div>
     {% endfor %}
