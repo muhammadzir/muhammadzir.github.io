@@ -1,8 +1,7 @@
-# _config.yml
 title: "Zir"
 description: "Personal blog"
 url: "https://zir.is-a.dev"
-baseurl: ""  # tetap kosong jika di root domain
+baseurl: ""  # jangan ganti kalau domain utama
 
 theme: minima
 
@@ -11,24 +10,14 @@ plugins:
   - jekyll-feed
   - jekyll-seo-tag
 
-# Pagination
 paginate: 6
 paginate_path: "/blog/page:num/"
 
-# Permalink untuk posts agar URL /blog/post-title
-collections:
-  posts:
-    output: true
-    permalink: /blog/:title/
-
-# Defaults agar SEO tag otomatis pakai data post
+# Pastikan post permalink berada di /blog/
 defaults:
   - scope:
       path: ""
       type: "posts"
     values:
       layout: "post"
-      seo:
-        title: "{{ page.title }}"
-        description: "{{ page.excerpt | strip_html | truncate:160 }}"
-        image: "{{ page.image }}"
+      permalink: "/blog/:title/"
