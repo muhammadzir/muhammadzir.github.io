@@ -1,11 +1,16 @@
+---
+layout: null
+permalink: /blog/search.json
+---
 [
-{% for post in site.posts %}
+{% assign posts = site.posts | sort: 'date' | reverse %}
+{% for post in posts %}
 {
-  "title": "{{ post.title | escape }}",
-  "excerpt": "{{ post.excerpt | strip_html | truncate:120 | escape }}",
-  "url": "{{ post.url }}",
-  "date": "{{ post.date | date: '%d %b %Y' }}",
-  "image": "{{ post.image | default: '' }}"
+  "title": {{ post.title | jsonify }},
+  "url": {{ post.url | relative_url | jsonify }},
+  "date": {{ post.date | date: "%Y-%m-%d" | jsonify }},
+  "excerpt": {{ post.excerpt | strip_html | jsonify }},
+  "image": {% if post.image %}{{ post.image | jsonify }}{% else %}null{% endif %}
 }{% if forloop.last == false %},{% endif %}
 {% endfor %}
 ]
