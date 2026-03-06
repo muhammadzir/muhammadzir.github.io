@@ -1,9 +1,7 @@
-# _config.yml
 title: "Zir"
 description: "Personal blog"
 url: "https://zir.is-a.dev"
-baseurl: ""       # jangan pakai "/blog", biar permalink tidak dobel
-
+baseurl: ""
 theme: minima
 
 plugins:
@@ -13,4 +11,4 @@ plugins:
 
 paginate: 6
 paginate_path: "/blog/page:num/"
-permalink: /blog/:title/   # cukup ini, tanpa folder tambahan
+permalink: /blog/:title/
