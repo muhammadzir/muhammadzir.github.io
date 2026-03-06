@@ -1,16 +1,11 @@
----
-layout: null
-permalink: /blog/search.json
----
-
 [
 {% for post in site.posts %}
 {
   "title": "{{ post.title | escape }}",
-  "excerpt": "{{ post.excerpt | strip_html | strip_newlines | escape }}",
-  "url": "{{ site.baseurl }}/blog{{ post.url }}",
-  "date": "{{ post.date | date: "%Y-%m-%d" }}",
-  "image": "{% if post.image %}{{ post.image }}{% else %}https://picsum.photos/600/400?random={{ forloop.index }}{% endif %}"
-}{% unless forloop.last %},{% endunless %}
+  "excerpt": "{{ post.excerpt | strip_html | truncate:120 | escape }}",
+  "url": "{{ post.url }}",
+  "date": "{{ post.date | date: '%d %b %Y' }}",
+  "image": "{{ post.image | default: '' }}"
+}{% if forloop.last == false %},{% endif %}
 {% endfor %}
 ]
