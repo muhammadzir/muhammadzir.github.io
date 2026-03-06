@@ -1,26 +1,34 @@
-# Site settings
+# _config.yml
 title: "Zir"
 description: "Personal blog"
-url: "https://zir.is-a.dev" # Tanpa trailing slash
-baseurl: "" # Kalau hosting di subfolder ganti misal "/blog"
+url: "https://zir.is-a.dev"
+baseurl: ""  # tetap kosong jika di root domain
 
-# Theme
 theme: minima
 
-# Plugins
 plugins:
-  - jekyll-feed
   - jekyll-paginate
+  - jekyll-feed
   - jekyll-seo-tag
-
-# Permalinks
-permalink: /blog/:title/
 
 # Pagination
 paginate: 6
 paginate_path: "/blog/page:num/"
 
-# Collections (default post collection)
+# Permalink untuk posts agar URL /blog/post-title
 collections:
   posts:
     output: true
+    permalink: /blog/:title/
+
+# Defaults agar SEO tag otomatis pakai data post
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      seo:
+        title: "{{ page.title }}"
+        description: "{{ page.excerpt | strip_html | truncate:160 }}"
+        image: "{{ page.image }}"
