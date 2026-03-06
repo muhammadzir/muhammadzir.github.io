@@ -11,9 +11,11 @@ paginate: 6
 
 <style>
 :root{
---yellow:#FFD500; --pink:#FF3CAC; --green:#29FF87; --blue:#3F6BFF;
---orange:#FF7A00; --shadow:#000; --bg:#FFF6E9;
+--yellow:#FFD500; --pink:#FF3CAC; --green:#29FF87;
+--blue:#3F6BFF; --orange:#FF7A00; --shadow:#000;
+--bg:#FFF6E9;
 }
+
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Space Grotesk',sans-serif;}
 body{background:var(--bg);overflow-x:hidden;padding:30px 16px 120px;}
 .container{max-width:1100px;margin:auto;width:100%;}
@@ -51,19 +53,59 @@ body{background:var(--bg);overflow-x:hidden;padding:30px 16px 120px;}
 <input type="text" id="searchInput" placeholder="Search article..." class="search-box"/>
 
 <div class="blog-grid" id="blogGrid">
-<!-- posts akan di-render lewat JS dari search.json -->
+  {% for post in site.posts %}
+  <a href="{{ post.url }}" class="blog-card" data-title="{{ post.title | downcase }}" data-excerpt="{{ post.excerpt | strip_html | downcase }}">
+    {% if post.image %}
+    <img src="{{ post.image }}" class="blog-thumb">
+    {% else %}
+    <img src="https://picsum.photos/600/400?random={{ forloop.index }}" class="blog-thumb">
+    {% endif %}
+    <div class="blog-content">
+      <h2>{{ post.title }}</h2>
+      <p class="date">{{ post.date | date: "%d %b %Y" }}</p>
+      <p class="excerpt">{{ post.excerpt | strip_html | truncate:120 }}</p>
+    </div>
+  </a>
+  {% endfor %}
 </div>
 
-<div class="pagination" id="pagination"></div>
+<div class="pagination">
+{% if paginator.previous_page %}
+<a href="{{ paginator.previous_page_path }}">Prev</a>
+{% endif %}
+{% for page in (1..paginator.total_pages) %}
+{% if page == paginator.page %}
+<span class="current">{{ page }}</span>
+{% elsif page == 1 %}
+<a href="/blog/">{{ page }}</a>
+{% else %}
+<a href="/blog/page{{ page }}/">{{ page }}</a>
+{% endif %}
+{% endfor %}
+{% if paginator.next_page %}
+<a href="{{ paginator.next_page_path }}">Next</a>
+{% endif %}
+</div>
 </div>
 
 <div class="bottom-bar"><button id="homeBtn">Home</button></div>
 
 <script>
-// Home button
-document.getElementById("homeBtn").onclick = ()=>{ window.location.href="/" }
+const homeBtn = document.getElementById("homeBtn")
+homeBtn.onclick = () => { window.location.href="/" }
 
-// Floating shapes animation
+const searchInput = document.getElementById("searchInput")
+const blogGrid = document.getElementById("blogGrid")
+searchInput.addEventListener("input", ()=>{
+  const keyword = searchInput.value.toLowerCase()
+  const posts = blogGrid.querySelectorAll(".blog-card")
+  posts.forEach(post=>{
+    const title = post.dataset.title
+    const excerpt = post.dataset.excerpt
+    post.style.display = (title.includes(keyword) || excerpt.includes(keyword)) ? "block" : "none"
+  })
+})
+
 const shapes = document.querySelectorAll(".floating")
 setInterval(()=>{
   shapes.forEach(shape=>{
@@ -73,89 +115,4 @@ setInterval(()=>{
     shape.style.transform = `translate(${x}px,${y}px) rotate(${r}deg)`
   })
 },4000)
-
-// Global variables
-let allPosts = []
-const perPage = 6
-let currentPage = 1
-
-// Fetch posts from search.json
-fetch("/blog/search.json")
-.then(res=>res.json())
-.then(data=>{
-  allPosts = data
-  renderPosts()
-  renderPagination()
-})
-
-// Render posts
-function renderPosts(){
-  const grid = document.getElementById("blogGrid")
-  grid.innerHTML = ""
-  const start = (currentPage-1)*perPage
-  const end = start+perPage
-  const postsToShow = allPosts.slice(start,end)
-  postsToShow.forEach(post=>{
-    const card = document.createElement("a")
-    card.href = post.url
-    card.className = "blog-card"
-    card.innerHTML = `
-      <img src="${post.image||'https://picsum.photos/600/400?random='+post.title}" class="blog-thumb">
-      <div class="blog-content">
-        <h2>${post.title}</h2>
-        <p class="date">${post.date}</p>
-        <p class="excerpt">${post.excerpt}</p>
-      </div>
-    `
-    grid.appendChild(card)
-  })
-}
-
-// Render pagination
-function renderPagination(){
-  const pag = document.getElementById("pagination")
-  pag.innerHTML = ""
-  const totalPages = Math.ceil(allPosts.length/perPage)
-  if(currentPage>1){
-    const prev = document.createElement("a")
-    prev.href="#"
-    prev.innerText="Prev"
-    prev.onclick = e=>{ e.preventDefault(); currentPage--; renderPosts(); renderPagination(); }
-    pag.appendChild(prev)
-  }
-  for(let i=1;i<=totalPages;i++){
-    if(i===currentPage){
-      const span = document.createElement("span")
-      span.className="current"
-      span.innerText=i
-      pag.appendChild(span)
-    }else{
-      const a = document.createElement("a")
-      a.href="#"
-      a.innerText=i
-      a.onclick = e=>{ e.preventDefault(); currentPage=i; renderPosts(); renderPagination(); }
-      pag.appendChild(a)
-    }
-  }
-  if(currentPage<totalPages){
-    const next = document.createElement("a")
-    next.href="#"
-    next.innerText="Next"
-    next.onclick = e=>{ e.preventDefault(); currentPage++; renderPosts(); renderPagination(); }
-    pag.appendChild(next)
-  }
-}
-
-// Search input
-document.getElementById("searchInput").addEventListener("input", e=>{
-  const keyword = e.target.value.toLowerCase()
-  allPosts = allPosts.map(p=>{
-    return {...p, visible: p.title.toLowerCase().includes(keyword) || p.excerpt.toLowerCase().includes(keyword)}
-  })
-  const filtered = allPosts.filter(p=>p.visible)
-  currentPage = 1
-  allPosts = filtered
-  renderPosts()
-  renderPagination()
-})
 </script>
