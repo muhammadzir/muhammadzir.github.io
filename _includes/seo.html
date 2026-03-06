@@ -1,28 +1,19 @@
-{% assign meta_title = page.title | default: site.title %}
-{% assign meta_desc = page.excerpt | strip_html | default: site.description %}
-{% assign meta_url = site.url | append: page.url %}
-{% if page.image %}
-  {% assign meta_image = site.url | append: page.image %}
-{% else %}
-  {% assign meta_image = site.url | append: "/assets/default-thumbnail.png" %}
-{% endif %}
-
-<!-- Primary Meta Tags -->
-<title>{{ meta_title }} | {{ site.title }}</title>
-<meta name="title" content="{{ meta_title }}">
-<meta name="description" content="{{ meta_desc }}">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="{{ page.excerpt | strip_html | truncate:160 | default: site.description }}">
+<meta name="author" content="{{ site.title }}">
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website">
-<meta property="og:url" content="{{ meta_url }}">
-<meta property="og:title" content="{{ meta_title }}">
-<meta property="og:description" content="{{ meta_desc }}">
-<meta property="og:image" content="{{ meta_image }}">
+<meta property="og:title" content="{{ page.title | default: site.title }}">
+<meta property="og:description" content="{{ page.excerpt | strip_html | truncate:160 | default: site.description }}">
+<meta property="og:url" content="{{ page.url | absolute_url }}">
+<meta property="og:site_name" content="{{ site.title }}">
+<meta property="og:image" content="{% if page.image %}{{ page.image | absolute_url }}{% else %}{{ '/assets/default-thumbnail.webp' | absolute_url }}{% endif %}">
 
 <!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image">
-<meta property="twitter:url" content="{{ meta_url }}">
-<meta property="twitter:title" content="{{ meta_title }}">
-<meta property="twitter:description" content="{{ meta_desc }}">
-<meta property="twitter:image" content="{{ meta_image }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ page.title | default: site.title }}">
+<meta name="twitter:description" content="{{ page.excerpt | strip_html | truncate:160 | default: site.description }}">
+<meta name="twitter:image" content="{% if page.image %}{{ page.image | absolute_url }}{% else %}{{ '/assets/default-thumbnail.webp' | absolute_url }}{% endif %}">
+
+<!-- Canonical -->
+<link rel="canonical" href="{{ page.url | absolute_url }}">
