@@ -1,15 +1,46 @@
+# Site settings
 title: "Zir"
 description: "Personal blog"
-url: "https://zir.is-a.dev"
-baseurl: ""
+url: "https://zir.is-a.dev" # tanpa trailing slash
+baseurl: "" # gunakan jika deploy ke subfolder
 
+# Theme
 theme: minima
 
-permalink: /blog/:title/
+# Permalinks
+permalink: /blog/:title/ # individual post URL
 
+# Plugins
 plugins:
   - jekyll-feed
   - jekyll-paginate
 
-paginate: 6
-paginate_path: "/blog/page:num/"
+# Pagination
+paginate: 6                 # jumlah post per page
+paginate_path: "/blog/page:num/" # URL pagination
+
+# Defaults (SEO & Open Graph)
+defaults:
+  - scope:
+      path: ""              # semua post
+      type: "posts"
+    values:
+      layout: null
+      seo:
+        title: "{{ page.title }} | Zir"
+        description: "{{ page.excerpt | strip_html | truncate:160 }}"
+        image: "{{ page.image | default: '/assets/default-thumbnail.jpg' }}"
+        url: "{{ site.url }}{{ page.url }}"
+        twitter:
+          card: "summary_large_image"
+          site: "@your_twitter" # opsional
+        facebook:
+          app_id: "" # opsional
+
+# Include/Exclude
+include: ["_pages", "_posts"]
+exclude: ["node_modules", "vendor", "Gemfile", "Gemfile.lock"]
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
