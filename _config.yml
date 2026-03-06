@@ -2,6 +2,6 @@ title: "Blog -Zir"
 baseurl: "" # kalau pakai user.github.io ini kosong
 url: "https://muhammadzir.github.io"
 
-theme: minima
+theme: chripy
 plugins:
   - jekyll-feed
