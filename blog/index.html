@@ -2,6 +2,7 @@
 layout: null
 title: Blog
 permalink: /blog/
+paginate: 6
 ---
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,7 +31,7 @@ font-family:'Space Grotesk',sans-serif;
 body{
 background:var(--bg);
 overflow-x:hidden;
-padding:30px 16px 100px;
+padding:30px 16px 120px;
 }
 
 /* container */
@@ -111,6 +112,30 @@ font-size:15px;
 line-height:1.6;
 }
 
+/* pagination */
+
+.pagination{
+margin-top:50px;
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.pagination a,
+.pagination span{
+padding:10px 16px;
+border:4px solid #111;
+background:white;
+font-weight:700;
+box-shadow:4px 4px 0 var(--shadow);
+text-decoration:none;
+color:#111;
+}
+
+.pagination .current{
+background:var(--green);
+}
+
 /* floating shapes */
 
 .floating{
@@ -155,13 +180,14 @@ background:var(--yellow);
 border-top:6px solid #111;
 display:flex;
 justify-content:center;
-padding:8px;
+padding:10px;
+z-index:10;
 }
 
 .bottom-bar button{
 background:var(--pink);
 border:4px solid #111;
-padding:8px 16px;
+padding:10px 18px;
 font-weight:700;
 box-shadow:4px 4px 0 var(--shadow);
 cursor:pointer;
@@ -228,11 +254,9 @@ font-size:14px;
 /* hide floating shape on small device */
 
 @media(max-width:600px){
-
 .floating{
 display:none;
 }
-
 }
 
 </style>
@@ -247,14 +271,14 @@ display:none;
 
 <div class="blog-grid">
 
-{% for post in site.posts %}
+{% for post in paginator.posts %}
 
 <a href="{{ post.url }}" class="blog-card">
 
 {% if post.image %}
 <img src="{{ post.image }}" class="blog-thumb">
 {% else %}
-<img src="https://picsum.photos/600/400" class="blog-thumb">
+<img src="https://picsum.photos/600/400?random={{ forloop.index }}" class="blog-thumb">
 {% endif %}
 
 <div class="blog-content">
@@ -274,7 +298,32 @@ display:none;
 </a>
 
 {% endfor %}
-  </div>
+
+</div>
+<div class="pagination">
+
+{% if paginator.previous_page %}
+<a href="{{ paginator.previous_page_path }}">Prev</a>
+{% endif %}
+
+{% for page in (1..paginator.total_pages) %}
+
+{% if page == paginator.page %}
+<span class="current">{{ page }}</span>
+{% elsif page == 1 %}
+<a href="/blog/">{{ page }}</a>
+{% else %}
+<a href="/blog/page{{ page }}/">{{ page }}</a>
+{% endif %}
+
+{% endfor %}
+
+{% if paginator.next_page %}
+<a href="{{ paginator.next_page_path }}">Next</a>
+{% endif %}
+
+</div>
+
 </div>
 
 <div class="bottom-bar">
