@@ -4,108 +4,82 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>{{ page.title }} | Zir Blog</title>
+<!-- Page Title -->
+<title>{{ page.title }} | Zir</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet">
+<!-- SEO Meta -->
+<meta name="description" content="{{ page.excerpt | strip_html | default: site.description }}">
+<link rel="canonical" href="{{ site.url }}{{ page.url }}">
+
+<!-- Open Graph / Social Preview -->
+<meta property="og:title" content="{{ page.title }} | Zir">
+<meta property="og:description" content="{{ page.excerpt | strip_html | default: site.description }}">
+<meta property="og:type" content="article">
+<meta property="og:url" content="{{ site.url }}{{ page.url }}">
+<meta property="og:image" content="{{ page.image | default: site.default_image }}">
+<meta property="og:site_name" content="Zir">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ page.title }} | Zir">
+<meta name="twitter:description" content="{{ page.excerpt | strip_html | default: site.description }}">
+<meta name="twitter:image" content="{{ page.image | default: site.default_image }}">
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
 
 <style>
-
 :root{
 --yellow:#FFD500;
 --pink:#FF3CAC;
+--green:#29FF87;
+--blue:#3F6BFF;
 --orange:#FF7A00;
---bg:#FFF6E9;
 --shadow:#000;
+--bg:#FFF6E9;
 }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Space Grotesk',sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Space Grotesk',sans-serif;}
 
-body{
-background:var(--bg);
-padding:20px;
-}
+body{background:var(--bg);padding:30px 16px 80px;line-height:1.6;color:#111;}
+.container{max-width:900px;margin:auto;width:100%;}
 
-.container{
-max-width:900px;
-margin:auto;
-}
+.post-title{font-size:40px;margin-bottom:20px;background:var(--orange);padding:16px 22px;border:8px solid #111;box-shadow:12px 12px 0 var(--shadow);transform:rotate(-2deg);display:inline-block;}
+.post-date{font-size:14px;font-weight:700;margin-bottom:20px;color:#333;}
+.post-image{width:100%;max-height:400px;object-fit:cover;border:6px solid #111;box-shadow:6px 6px 0 var(--shadow);margin-bottom:30px;}
+.post-content{font-size:16px;}
 
-.title{
-font-size:40px;
-background:var(--orange);
-padding:16px;
-border:8px solid #111;
-box-shadow:10px 10px 0 var(--shadow);
-transform:rotate(-2deg);
-display:inline-block;
-margin-bottom:20px;
-}
+.bottom-bar{position:fixed;bottom:0;left:0;width:100%;background:var(--yellow);border-top:6px solid #111;display:flex;justify-content:center;padding:10px;z-index:10;}
+.bottom-bar button{background:var(--pink);border:4px solid #111;padding:10px 18px;font-weight:700;box-shadow:4px 4px 0 var(--shadow);cursor:pointer;}
 
-.date{
-font-weight:800;
-margin-bottom:20px;
-}
-
-.post-box{
-background:white;
-border:8px solid #111;
-padding:30px;
-box-shadow:10px 10px 0 var(--shadow);
-line-height:1.7;
-font-size:18px;
-}
-
-.back{
-margin-top:30px;
-display:inline-block;
-background:var(--pink);
-padding:10px 16px;
-border:4px solid #111;
-box-shadow:4px 4px 0 var(--shadow);
-text-decoration:none;
-color:#111;
-font-weight:800;
-}
-
-@media(max-width:768px){
-
-.title{
-font-size:28px;
-border:6px solid #111;
-}
-
-.post-box{
-padding:20px;
-font-size:16px;
-}
-
-}
-
+@media(max-width:600px){.post-title{font-size:28px;padding:12px;}}
 </style>
-</head>
 
+</head>
 <body>
 
 <div class="container">
+  <h1 class="post-title">{{ page.title }}</h1>
+  <p class="post-date">{{ page.date | date: "%d %b %Y" }}</p>
 
-<h1 class="title">{{ page.title }}</h1>
+  {% if page.image %}
+  <img src="{{ page.image }}" class="post-image">
+  {% endif %}
 
-<p class="date">
-{{ page.date | date: "%d %B %Y" }}
-</p>
-
-<div class="post-box">
-{{ content }}
+  <div class="post-content">
+    {{ content }}
+  </div>
 </div>
 
-<a class="back" href="/blog">← Back to blog</a>
-
+<div class="bottom-bar">
+  <button id="btn-home">Home</button>
 </div>
+
+<script>
+document.getElementById('btn-home').onclick = () => {
+  window.location.href = '/blog/';
+};
+</script>
 
 </body>
 </html>
