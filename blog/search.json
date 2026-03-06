@@ -1,12 +1,16 @@
 ---
 layout: null
+permalink: /blog/search.json
 ---
 [
-{% for post in site.posts %}
-  {
-    "title": "{{ post.title | escape }}",
-    "url": "{{ site.baseurl }}/blog{{ post.url }}",
-    "excerpt": "{{ post.excerpt | strip_html | escape }}"
-  }{% unless forloop.last %},{% endunless %}
+{% assign posts = site.posts | sort: 'date' | reverse %}
+{% for post in posts %}
+{
+  "title": {{ post.title | jsonify }},
+  "url": {{ post.url | relative_url | jsonify }},
+  "date": {{ post.date | date: "%Y-%m-%d" | jsonify }},
+  "excerpt": {{ post.excerpt | strip_html | jsonify }},
+  "image": {% if post.image %}{{ post.image | jsonify }}{% else %}null{% endif %}
+}{% if forloop.last == false %},{% endif %}
 {% endfor %}
 ]
