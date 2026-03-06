@@ -1,7 +1,8 @@
 title: "Zir"
-baseurl: "" # kalau pakai user.github.io ini kosong
-url: "https://muhammadzir.github.io"
+url: "https://zir.is-a.dev"
+baseurl: "/blog"
 
-theme: chripy
+theme: chirpy
+
 plugins:
   - jekyll-feed
