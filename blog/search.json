@@ -1,14 +1,16 @@
 ---
 layout: null
+permalink: /blog/search.json
 ---
 
 [
 {% for post in site.posts %}
 {
-"title": "{{ post.title | escape }}",
-"url": "{{ post.url }}",
+"title": {{ post.title | jsonify }},
+"url": {{ post.url | jsonify }},
 "date": "{{ post.date | date: "%d %b %Y" }}",
-"excerpt": "{{ post.excerpt | strip_html | truncate:120 | escape }}"
+"excerpt": {{ post.excerpt | strip_html | jsonify }},
+"image": {{ post.image | default: "https://picsum.photos/600/400" | jsonify }}
 }{% unless forloop.last %},{% endunless %}
 {% endfor %}
 ]
