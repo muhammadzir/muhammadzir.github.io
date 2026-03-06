@@ -1,15 +1,26 @@
-# _config.yml (full working config)
+# Site settings
 title: "Zir"
 description: "Personal blog"
-url: "https://zir.is-a.dev"
-baseurl: ""
+url: "https://zir.is-a.dev" # Tanpa trailing slash
+baseurl: "" # Kalau hosting di subfolder ganti misal "/blog"
 
+# Theme
 theme: minima
 
+# Plugins
 plugins:
-  - jekyll-paginate
   - jekyll-feed
+  - jekyll-paginate
   - jekyll-seo-tag
 
+# Permalinks
+permalink: /blog/:title/
+
+# Pagination
 paginate: 6
 paginate_path: "/blog/page:num/"
+
+# Collections (default post collection)
+collections:
+  posts:
+    output: true
