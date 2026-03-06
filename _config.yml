@@ -1,7 +1,8 @@
+# _config.yml
 title: "Zir"
 description: "Personal blog"
 url: "https://zir.is-a.dev"
-baseurl: ""
+baseurl: ""  # kosong karena hosting di root domain
 
 theme: minima
 
@@ -12,11 +13,4 @@ plugins:
 
 paginate: 6
 paginate_path: "/blog/page:num/"
-
-# Buat post otomatis di /blog/:title/
-defaults:
-  - scope:
-      path: ""
-      type: "posts"
-    values:
-      permalink: /blog/:title/
+permalink: "/blog/:title/"   # pastikan hanya satu /blog/
