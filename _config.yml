@@ -2,7 +2,7 @@
 title: "Zir"
 description: "Personal blog"
 url: "https://zir.is-a.dev"
-baseurl: ""  # kosong karena hosting di root domain
+baseurl: ""       # jangan pakai "/blog", biar permalink tidak dobel
 
 theme: minima
 
@@ -13,4 +13,4 @@ plugins:
 
 paginate: 6
 paginate_path: "/blog/page:num/"
-permalink: "/blog/:title/"   # pastikan hanya satu /blog/
+permalink: /blog/:title/   # cukup ini, tanpa folder tambahan
