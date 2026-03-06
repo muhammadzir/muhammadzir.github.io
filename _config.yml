@@ -1,17 +1,11 @@
 title: "Zir"
 description: "Personal blog"
-
 url: "https://zir.is-a.dev"
-baseurl: "/blog"
+baseurl: ""
 
 theme: minima
 
-minima:
-  skin: dark
-
-author:
-  name: Zir
+permalink: /blog/:title/
 
 plugins:
   - jekyll-feed
-  - jekyll-seo-tag
