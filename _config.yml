@@ -1,37 +1,15 @@
-# _config.yml
+# _config.yml (full working config)
 title: "Zir"
 description: "Personal blog"
 url: "https://zir.is-a.dev"
 baseurl: ""
 
-# Theme
 theme: minima
 
-# Plugins
 plugins:
   - jekyll-paginate
   - jekyll-feed
   - jekyll-seo-tag
 
-# Permalink untuk post
-permalink: /blog/:title/
-
-# Pagination
 paginate: 6
 paginate_path: "/blog/page:num/"
-
-# Exclude folders/files if needed
-exclude:
-  - node_modules
-  - Gemfile
-  - Gemfile.lock
-
-# Defaults (optional, untuk SEO lebih rapi)
-defaults:
-  -
-    scope:
-      path: ""
-      type: "posts"
-    values:
-      layout: "post"
-      author: "Zir"
