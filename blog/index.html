@@ -1,7 +1,6 @@
 ---
 layout: null
 title: Blog
-paginate: 6
 ---
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,142 +10,35 @@ paginate: 6
 
 <style>
 :root{
---yellow:#FFD500;
---pink:#FF3CAC;
---green:#29FF87;
---blue:#3F6BFF;
---orange:#FF7A00;
---shadow:#000;
---bg:#FFF6E9;
+--yellow:#FFD500; --pink:#FF3CAC; --green:#29FF87; --blue:#3F6BFF;
+--orange:#FF7A00; --shadow:#000; --bg:#FFF6E9;
 }
-
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Space Grotesk',sans-serif;}
-
-body{
-background:var(--bg);
-overflow-x:hidden;
-padding:30px 16px 120px;
-}
-
+body{background:var(--bg);overflow-x:hidden;padding:30px 16px 120px;}
 .container{max-width:1100px;margin:auto;width:100%;}
-
-.section-title{
-font-size:40px;
-margin-bottom:30px;
-background:var(--orange);
-padding:16px 22px;
-border:8px solid #111;
-box-shadow:12px 12px 0 var(--shadow);
-transform:rotate(-2deg);
-display:inline-block;
-}
-
-.search-box{
-width:100%;
-padding:14px 16px;
-margin-bottom:40px;
-border:6px solid #111;
-font-size:16px;
-font-weight:700;
-box-shadow:8px 8px 0 var(--shadow);
-outline:none;
-background:white;
-}
-
-.blog-grid{
-display:grid;
-grid-template-columns:1fr;
-gap:30px;
-}
-
-.blog-card{
-display:block;
-background:white;
-border:6px solid #111;
-box-shadow:10px 10px 0 var(--shadow);
-text-decoration:none;
-color:#111;
-overflow:hidden;
-transition:.2s;
-}
-
-.blog-card:hover{
-transform:translate(-6px,-6px);
-box-shadow:16px 16px 0 var(--shadow);
-}
-
-.blog-thumb{
-width:100%;
-height:180px;
-object-fit:cover;
-border-bottom:6px solid #111;
-}
-
+.section-title{font-size:40px;margin-bottom:30px;background:var(--orange);padding:16px 22px;border:8px solid #111;box-shadow:12px 12px 0 var(--shadow);transform:rotate(-2deg);display:inline-block;}
+.search-box{width:100%;padding:14px 16px;margin-bottom:40px;border:6px solid #111;font-size:16px;font-weight:700;box-shadow:8px 8px 0 var(--shadow);outline:none;background:white;}
+.blog-grid{display:grid;grid-template-columns:1fr;gap:30px;}
+.blog-card{display:block;background:white;border:6px solid #111;box-shadow:10px 10px 0 var(--shadow);text-decoration:none;color:#111;overflow:hidden;transition:.2s;}
+.blog-card:hover{transform:translate(-6px,-6px);box-shadow:16px 16px 0 var(--shadow);}
+.blog-thumb{width:100%;height:180px;object-fit:cover;border-bottom:6px solid #111;}
 .blog-content{padding:20px;}
 .blog-card h2{font-size:24px;margin-bottom:10px;}
 .date{font-size:13px;font-weight:700;margin-bottom:8px;}
 .excerpt{font-size:15px;line-height:1.6;}
-
-.pagination{
-margin-top:50px;
-display:flex;
-gap:10px;
-flex-wrap:wrap;
-}
-
-.pagination a,
-.pagination span{
-padding:10px 16px;
-border:4px solid #111;
-background:white;
-font-weight:700;
-box-shadow:4px 4px 0 var(--shadow);
-text-decoration:none;
-color:#111;
-}
-
+.pagination{margin-top:50px;display:flex;gap:10px;flex-wrap:wrap;}
+.pagination button{padding:10px 16px;border:4px solid #111;background:white;font-weight:700;box-shadow:4px 4px 0 var(--shadow);cursor:pointer;}
 .pagination .current{background:var(--green);}
-
-.floating{
-position:absolute;
-border:6px solid #111;
-box-shadow:6px 6px 0 var(--shadow);
-opacity:.35;
-}
-
+.floating{position:absolute;border:6px solid #111;box-shadow:6px 6px 0 var(--shadow);opacity:.35;}
 .shape1{width:120px;height:120px;background:var(--green);top:10%;left:6%;}
 .shape2{width:90px;height:90px;background:var(--pink);bottom:15%;right:8%;}
 .shape3{width:100px;height:100px;background:var(--blue);top:50%;right:12%;}
+.bottom-bar{position:fixed;bottom:0;left:0;width:100%;background:var(--yellow);border-top:6px solid #111;display:flex;justify-content:center;padding:10px;z-index:10;}
+.bottom-bar button{background:var(--pink);border:4px solid #111;padding:10px 18px;font-weight:700;box-shadow:4px 4px 0 var(--shadow);cursor:pointer;}
 
-.bottom-bar{
-position:fixed;bottom:0;left:0;width:100%;
-background:var(--yellow);border-top:6px solid #111;
-display:flex;justify-content:center;padding:10px;z-index:10;
-}
-
-.bottom-bar button{
-background:var(--pink);border:4px solid #111;
-padding:10px 18px;font-weight:700;box-shadow:4px 4px 0 var(--shadow);cursor:pointer;
-}
-
-@media(min-width:650px){
-.blog-grid{grid-template-columns:repeat(2,1fr);}
-.section-title{font-size:46px;}
-}
-
-@media(min-width:950px){
-.blog-grid{grid-template-columns:repeat(3,1fr);gap:36px;}
-.blog-card{border:10px solid #111;box-shadow:16px 16px 0 var(--shadow);}
-.blog-thumb{height:200px;border-bottom:10px solid #111;}
-.section-title{font-size:52px;}
-}
-
-@media(max-width:420px){
-.section-title{font-size:28px;padding:12px;}
-.blog-card h2{font-size:20px;}
-.excerpt{font-size:14px;}
-}
-
+@media(min-width:650px){.blog-grid{grid-template-columns:repeat(2,1fr);}.section-title{font-size:46px;}}
+@media(min-width:950px){.blog-grid{grid-template-columns:repeat(3,1fr);gap:36px;}.blog-card{border:10px solid #111;box-shadow:16px 16px 0 var(--shadow);}.blog-thumb{height:200px;border-bottom:10px solid #111;}.section-title{font-size:52px;}}
+@media(max-width:420px){.section-title{font-size:28px;padding:12px;}.blog-card h2{font-size:20px;}.excerpt{font-size:14px;}}
 @media(max-width:600px){.floating{display:none;}}
 </style>
 
@@ -155,23 +47,20 @@ padding:10px 18px;font-weight:700;box-shadow:4px 4px 0 var(--shadow);cursor:poin
 <div class="floating shape3"></div>
 
 <div class="container">
-
 <h1 class="section-title">Blog</h1>
+<input type="text" id="searchInput" placeholder="Search article..." class="search-box" />
 
-<input type="text" id="searchInput" placeholder="Search article..." class="search-box"/>
+<div class="blog-grid" id="postsContainer"></div>
 
-<div class="blog-grid">
-<!-- posts akan dirender JS search atau pagination -->
+<div class="pagination" id="paginationContainer"></div>
 </div>
-<script>
-// tombol home
-const homeBtn = document.createElement('button')
-homeBtn.id = "homeBtn"
-homeBtn.textContent = "Home"
-homeBtn.onclick = () => { window.location.href="/" }
-document.querySelector(".bottom-bar").appendChild(homeBtn)
 
-// floating shapes animation
+<div class="bottom-bar"><button id="homeBtn">Home</button></div>
+
+<script>
+const homeBtn = document.getElementById("homeBtn")
+homeBtn.onclick = () => { window.location.href="/" }
+
 const shapes = document.querySelectorAll(".floating")
 setInterval(()=>{
   shapes.forEach(shape=>{
@@ -182,112 +71,61 @@ setInterval(()=>{
   })
 },4000)
 
-// fetch semua post dari search.json
+// ---------------------------
+// SEARCH & PAGINATION
+// ---------------------------
+const postsContainer = document.getElementById("postsContainer")
+const paginationContainer = document.getElementById("paginationContainer")
+const searchInput = document.getElementById("searchInput")
 let allPosts = []
+let currentPage = 1
+const postsPerPage = 6
+
+// Fetch semua post dari search.json
 fetch('/blog/search.json')
   .then(res => res.json())
   .then(data => {
     allPosts = data.sort((a,b)=> new Date(b.date) - new Date(a.date))
-    renderPosts(allPosts)
+    renderPosts()
   })
 
-// element
-const postsContainer = document.querySelector(".blog-grid")
-const searchInput = document.getElementById("searchInput")
-const postsPerPage = {{ paginator.per_page | default: 6 }}
-let currentPage = 1
-
-function renderPosts(posts, page = 1){
-  postsContainer.innerHTML = ""
-  const start = (page-1)*postsPerPage
-  const end = start + postsPerPage
-  const pagePosts = posts.slice(start, end)
-
-  pagePosts.forEach(post=>{
-    const a = document.createElement("a")
-    a.href = post.url
-    a.className = "blog-card"
-    a.dataset.title = post.title.toLowerCase()
-    a.dataset.excerpt = post.excerpt.toLowerCase()
-
-    const img = document.createElement("img")
-    img.className = "blog-thumb"
-    img.src = post.image || `https://picsum.photos/600/400?random=${Math.floor(Math.random()*1000)}`
-    a.appendChild(img)
-
-    const content = document.createElement("div")
-    content.className = "blog-content"
-
-    const h2 = document.createElement("h2")
-    h2.textContent = post.title
-    content.appendChild(h2)
-
-    const date = document.createElement("p")
-    date.className = "date"
-    date.textContent = new Date(post.date).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})
-    content.appendChild(date)
-
-    const excerpt = document.createElement("p")
-    excerpt.className = "excerpt"
-    excerpt.textContent = post.excerpt.length > 120 ? post.excerpt.slice(0,120)+"..." : post.excerpt
-    content.appendChild(excerpt)
-
-    a.appendChild(content)
-    postsContainer.appendChild(a)
-  })
-
-  renderPagination(posts, page)
-}
-
-// search
-searchInput.addEventListener("input", ()=>{
+function renderPosts(){
   const keyword = searchInput.value.toLowerCase()
-  const filtered = allPosts.filter(p => p.title.toLowerCase().includes(keyword) || p.excerpt.toLowerCase().includes(keyword))
-  currentPage = 1
-  renderPosts(filtered, currentPage)
-})
+  let filtered = allPosts.filter(post =>
+    post.title.toLowerCase().includes(keyword) ||
+    post.excerpt.toLowerCase().includes(keyword)
+  )
 
-// pagination
-function renderPagination(posts, page){
-  let pagination = document.querySelector(".pagination")
-  if(!pagination){
-    pagination = document.createElement("div")
-    pagination.className = "pagination"
-    postsContainer.parentNode.appendChild(pagination)
-  }
-  pagination.innerHTML = ""
-  const totalPages = Math.ceil(posts.length / postsPerPage)
-  if(totalPages <= 1) return
+  const totalPages = Math.ceil(filtered.length / postsPerPage)
+  if(currentPage > totalPages) currentPage = totalPages || 1
 
-  if(page > 1){
-    const prev = document.createElement("a")
-    prev.href="#"
-    prev.textContent = "Prev"
-    prev.onclick = (e)=>{ e.preventDefault(); currentPage--; renderPosts(posts,currentPage) }
-    pagination.appendChild(prev)
-  }
+  const start = (currentPage-1)*postsPerPage
+  const paginated = filtered.slice(start, start+postsPerPage)
 
+  postsContainer.innerHTML = paginated.map((post,i)=>`
+    <a href="${post.url}" class="blog-card">
+      <img src="${post.image || 'https://picsum.photos/600/400?random=${i}'}" class="blog-thumb">
+      <div class="blog-content">
+        <h2>${post.title}</h2>
+        <p class="date">${new Date(post.date).toLocaleDateString()}</p>
+        <p class="excerpt">${post.excerpt}</p>
+      </div>
+    </a>
+  `).join('')
+
+  // render pagination
+  paginationContainer.innerHTML = ''
   for(let i=1;i<=totalPages;i++){
-    if(i===page){
-      const span = document.createElement("span")
-      span.className="current"
-      span.textContent=i
-      pagination.appendChild(span)
-    } else {
-      const a = document.createElement("a")
-      a.href="#"
-      a.textContent=i
-      a.onclick = (e)=>{ e.preventDefault(); currentPage=i; renderPosts(posts,currentPage) }
-      pagination.appendChild(a)
-    }
-  }
-
-  if(page < totalPages){
-    const next = document.createElement("a")
-    next.href="#"
-    next.textContent="Next"
-    next.onclick = (e)=>{ e.preventDefault(); currentPage++; renderPosts(posts,currentPage) }
-    pagination.appendChild(next)
+    const btn = document.createElement('button')
+    btn.textContent = i
+    if(i===currentPage) btn.classList.add('current')
+    btn.onclick = ()=>{ currentPage=i; renderPosts() }
+    paginationContainer.appendChild(btn)
   }
 }
+
+searchInput.addEventListener("input", ()=>{
+  currentPage = 1
+  renderPosts()
+})
 </script>
