@@ -8,16 +8,20 @@ paginate: 6
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{{ page.title }} | Zir</title>
 
-<!-- SEO -->
 {% seo %}
 
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
 
 <style>
 :root{
---yellow:#FFD500;--pink:#FF3CAC;--green:#29FF87;--blue:#3F6BFF;--orange:#FF7A00;--shadow:#000;--bg:#FFF6E9;
+--yellow:#FFD500;
+--pink:#FF3CAC;
+--green:#29FF87;
+--blue:#3F6BFF;
+--orange:#FF7A00;
+--shadow:#000;
+--bg:#FFF6E9;
 }
-
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Space Grotesk',sans-serif;}
 body{background:var(--bg);overflow-x:hidden;padding:30px 16px 120px;}
 .container{max-width:1100px;margin:auto;width:100%;}
@@ -54,43 +58,43 @@ body{background:var(--bg);overflow-x:hidden;padding:30px 16px 120px;}
 
 <h1 class="section-title">Blog</h1>
 
-<input type="text" id="searchInput" placeholder="Search article..." class="search-box"/>
+<input type="text" id="searchInput" placeholder="Search article..." class="search-box" />
 
 <div class="blog-grid">
 
 {% for post in paginator.posts %}
 <a href="{{ post.url }}" class="blog-card" data-title="{{ post.title | downcase }}" data-excerpt="{{ post.excerpt | strip_html | downcase }}">
-{% if post.image %}
-<img src="{{ post.image }}" class="blog-thumb">
-{% else %}
-<img src="https://picsum.photos/600/400?random={{ forloop.index }}" class="blog-thumb">
-{% endif %}
-<div class="blog-content">
-<h2>{{ post.title }}</h2>
-<p class="date">{{ post.date | date: "%d %b %Y" }}</p>
-<p class="excerpt">{{ post.excerpt | strip_html | truncate:120 }}</p>
-</div>
+  {% if post.image %}
+  <img src="{{ post.image }}" class="blog-thumb">
+  {% else %}
+  <img src="https://picsum.photos/600/400?random={{ forloop.index }}" class="blog-thumb">
+  {% endif %}
+  <div class="blog-content">
+    <h2>{{ post.title }}</h2>
+    <p class="date">{{ post.date | date: "%d %b %Y" }}</p>
+    <p class="excerpt">{{ post.excerpt | strip_html | truncate:120 }}</p>
+  </div>
 </a>
 {% endfor %}
 
 </div>
 
 <div class="pagination">
-{% if paginator.previous_page %}
-<a href="{{ paginator.previous_page_path }}">Prev</a>
-{% endif %}
-{% for page in (1..paginator.total_pages) %}
-{% if page == paginator.page %}
-<span class="current">{{ page }}</span>
-{% elsif page == 1 %}
-<a href="/blog/">{{ page }}</a>
-{% else %}
-<a href="/blog/page{{ page }}/">{{ page }}</a>
-{% endif %}
-{% endfor %}
-{% if paginator.next_page %}
-<a href="{{ paginator.next_page_path }}">Next</a>
-{% endif %}
+  {% if paginator.previous_page %}
+    <a href="{{ paginator.previous_page_path }}">Prev</a>
+  {% endif %}
+  {% for page in (1..paginator.total_pages) %}
+    {% if page == paginator.page %}
+      <span class="current">{{ page }}</span>
+    {% elsif page == 1 %}
+      <a href="/blog/">{{ page }}</a>
+    {% else %}
+      <a href="/blog/page{{ page }}/">{{ page }}</a>
+    {% endif %}
+  {% endfor %}
+  {% if paginator.next_page %}
+    <a href="{{ paginator.next_page_path }}">Next</a>
+  {% endif %}
 </div>
 
 </div>
@@ -100,27 +104,27 @@ body{background:var(--bg);overflow-x:hidden;padding:30px 16px 120px;}
 </div>
 
 <script>
-const homeBtn = document.getElementById("homeBtn");
-homeBtn.onclick = ()=>{window.location.href="/";}
+const homeBtn = document.getElementById("homeBtn")
+homeBtn.onclick = () => { window.location.href="/" }
 
-const searchInput = document.getElementById("searchInput");
+const searchInput = document.getElementById("searchInput")
 searchInput.addEventListener("input", ()=>{
-  const keyword = searchInput.value.toLowerCase();
-  const posts = document.querySelectorAll(".blog-card");
+  const keyword = searchInput.value.toLowerCase()
+  const posts = document.querySelectorAll(".blog-card")
   posts.forEach(post=>{
-    const title = post.dataset.title;
-    const excerpt = post.dataset.excerpt;
-    post.style.display = (title.includes(keyword) || excerpt.includes(keyword)) ? "block" : "none";
-  });
-});
+    const title = post.dataset.title
+    const excerpt = post.dataset.excerpt
+    post.style.display = (title.includes(keyword) || excerpt.includes(keyword)) ? "block" : "none"
+  })
+})
 
-const shapes = document.querySelectorAll(".floating");
+const shapes = document.querySelectorAll(".floating")
 setInterval(()=>{
   shapes.forEach(shape=>{
-    const x = (Math.random()-0.5)*30;
-    const y = (Math.random()-0.5)*30;
-    const r = (Math.random()-0.5)*20;
-    shape.style.transform = `translate(${x}px,${y}px) rotate(${r}deg)`;
-  });
-},4000);
+    const x = (Math.random()-0.5)*30
+    const y = (Math.random()-0.5)*30
+    const r = (Math.random()-0.5)*20
+    shape.style.transform = `translate(${x}px,${y}px) rotate(${r}deg)`
+  })
+},4000)
 </script>
