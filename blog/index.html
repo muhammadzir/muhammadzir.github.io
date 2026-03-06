@@ -7,119 +7,301 @@ permalink: /blog/
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet">
 
 <style>
+
 :root{
-  --yellow:#FFD500;--pink:#FF3CAC;--green:#29FF87;--blue:#3F6BFF;--orange:#FF7A00;--shadow:#000;--bg:#FFF6E9;
-}
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Space Grotesk',sans-serif;cursor:none}
-html, body {height: 100%;margin: 0;display: flex;flex-direction: column;}
-body{background:var(--bg);overflow-x:hidden;position:relative;padding-bottom:70px;}
-body > *:not(.bottom-bar):not(.floating-shape):not(.floating-icon){flex:1 0 auto;}
-.cursor{width:22px;height:22px;border:3px solid #111;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .05s linear}
-
-.floating-shape{position:absolute;border:6px solid #111;box-shadow:6px 6px 0 var(--shadow);border-radius:6px;opacity:.5;animation:floatShape linear infinite}
-.floating-shape.shape1{width:150px;height:150px;top:10%;left:10%;background:var(--orange);animation-duration:20s}
-.floating-shape.shape2{width:100px;height:100px;top:40%;left:70%;background:var(--green);animation-duration:25s}
-.floating-shape.shape3{width:120px;height:120px;top:70%;left:30%;background:var(--pink);animation-duration:18s}
-@keyframes floatShape{0%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(15px,-15px) rotate(45deg)}100%{transform:translate(-15px,15px) rotate(0deg)}}
-
-.section-title{font-size:42px;margin-bottom:60px;background:var(--orange);padding:18px;border:10px solid #111;box-shadow:14px 14px 0 var(--shadow);transform:rotate(-3deg);display:inline-block}
-.blog-grid{display:flex;flex-wrap:wrap;gap:40px;perspective:1000px}
-.blog-card{flex:1 1 100%;background:white;border:10px solid #111;padding:30px;box-shadow:16px 16px 0 var(--shadow);transition:.3s transform,.3s box-shadow;transform-style:preserve-3d;text-decoration:none;color:#111}
-.blog-card h2{font-size:28px;margin-bottom:12px}
-.blog-card .date{font-size:14px;font-weight:800;margin-bottom:8px}
-.blog-card .excerpt{font-size:16px}
-
-/* Bottom Bar */
-.bottom-bar {
-  position: fixed;
-  bottom:0;
-  left:0;
-  width:100%;
-  display: flex;
-  justify-content: center; /* tombol di tengah */
-  align-items: center;
-  z-index: 1200;
-  background: var(--yellow);
-  padding: 6px 0;
-  border-top: 6px solid #111;
-  box-shadow: 0 -6px 0 var(--shadow);
-}
-.bottom-bar button {
-  padding: 6px 12px;
-  font-weight: 800;
-  background: var(--pink);
-  border: 4px solid #111;
-  box-shadow: 4px 4px 0 var(--shadow);
-  transform: rotate(-2deg);
-  cursor: pointer;
-  transition: transform .15s;
-  font-size:14px;
-}
-.bottom-bar button:hover {
-  transform: rotate(2deg) translate(-4px,-4px);
+--yellow:#FFD500;
+--pink:#FF3CAC;
+--green:#29FF87;
+--blue:#3F6BFF;
+--orange:#FF7A00;
+--shadow:#000;
+--bg:#FFF6E9;
 }
 
-/* Mobile adjustments */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Space Grotesk',sans-serif;
+}
+
+body{
+background:var(--bg);
+overflow-x:hidden;
+position:relative;
+padding:40px 20px 100px;
+}
+
+/* container */
+
+.container{
+max-width:900px;
+margin:auto;
+}
+
+/* cursor desktop only */
+
+@media (hover:hover){
+*{cursor:none}
+.cursor{
+width:22px;
+height:22px;
+border:3px solid #111;
+position:fixed;
+pointer-events:none;
+z-index:9999;
+transform:translate(-50%,-50%);
+transition:transform .05s linear;
+}
+}
+
+/* floating shapes */
+
+.floating-shape{
+position:absolute;
+border:6px solid #111;
+box-shadow:6px 6px 0 var(--shadow);
+border-radius:6px;
+opacity:.45;
+animation:floatShape linear infinite;
+}
+
+.shape1{
+width:120px;
+height:120px;
+top:8%;
+left:5%;
+background:var(--orange);
+animation-duration:20s;
+}
+
+.shape2{
+width:90px;
+height:90px;
+top:40%;
+right:8%;
+background:var(--green);
+animation-duration:25s;
+}
+
+.shape3{
+width:100px;
+height:100px;
+bottom:20%;
+left:20%;
+background:var(--pink);
+animation-duration:18s;
+}
+
+@keyframes floatShape{
+0%{transform:translate(0,0) rotate(0deg)}
+50%{transform:translate(15px,-15px) rotate(45deg)}
+100%{transform:translate(-15px,15px) rotate(0deg)}
+}
+
+/* title */
+
+.section-title{
+font-size:42px;
+margin-bottom:60px;
+background:var(--orange);
+padding:18px;
+border:10px solid #111;
+box-shadow:14px 14px 0 var(--shadow);
+transform:rotate(-3deg);
+display:inline-block;
+}
+
+/* blog grid */
+
+.blog-grid{
+display:flex;
+flex-direction:column;
+gap:40px;
+perspective:1000px;
+}
+
+/* blog card */
+
+.blog-card{
+display:block;
+background:white;
+border:10px solid #111;
+padding:30px;
+box-shadow:16px 16px 0 var(--shadow);
+transition:.25s transform,.25s box-shadow;
+transform-style:preserve-3d;
+text-decoration:none;
+color:#111;
+}
+
+.blog-card:hover{
+transform:translate(-6px,-6px) rotate(-1deg);
+box-shadow:22px 22px 0 var(--shadow);
+}
+
+.blog-card h2{
+font-size:28px;
+margin-bottom:12px;
+}
+
+.blog-card .date{
+font-size:14px;
+font-weight:800;
+margin-bottom:8px;
+}
+
+.blog-card .excerpt{
+font-size:16px;
+line-height:1.4;
+}
+  /* bottom bar */
+
+.bottom-bar{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:1200;
+background:var(--yellow);
+padding:8px 0;
+border-top:6px solid #111;
+box-shadow:0 -6px 0 var(--shadow);
+}
+
+.bottom-bar button{
+padding:6px 14px;
+font-weight:800;
+background:var(--pink);
+border:4px solid #111;
+box-shadow:4px 4px 0 var(--shadow);
+transform:rotate(-2deg);
+cursor:pointer;
+transition:transform .15s;
+font-size:14px;
+}
+
+.bottom-bar button:hover{
+transform:rotate(2deg) translate(-4px,-4px);
+}
+
+/* mobile */
+
 @media(max-width:768px){
-  .section-title{font-size:32px;padding:14px;border:8px solid #111;box-shadow:10px 10px 0 var(--shadow);}
-  .blog-card{padding:20px;border:8px solid #111;box-shadow:12px 12px 0 var(--shadow);}
-  .blog-card h2{font-size:22px}
-  .blog-card .excerpt{font-size:14px}
-  .bottom-bar button{padding:4px 10px;font-size:12px}
+
+body{
+padding:30px 16px 100px;
 }
+
+.section-title{
+font-size:30px;
+padding:14px;
+border:8px solid #111;
+box-shadow:10px 10px 0 var(--shadow);
+}
+
+.blog-card{
+padding:20px;
+border:8px solid #111;
+box-shadow:12px 12px 0 var(--shadow);
+}
+
+.blog-card h2{
+font-size:22px;
+}
+
+.blog-card .excerpt{
+font-size:14px;
+}
+
+.shape1{width:80px;height:80px}
+.shape2{width:70px;height:70px}
+.shape3{width:75px;height:75px}
+
+}
+
 </style>
 
+
 <div class="cursor" id="cursor"></div>
+
 <div class="floating-shape shape1"></div>
 <div class="floating-shape shape2"></div>
 <div class="floating-shape shape3"></div>
 
+<div class="container">
+
 <h1 class="section-title">Blog</h1>
+
 <div class="blog-grid">
-  {% for post in site.posts %}
-  <a href="{{ post.url }}" class="blog-card magnetic">
-    <h2>{{ post.title }}</h2>
-    <p class="date">{{ post.date | date: "%d %b %Y" }}</p>
-    <p class="excerpt">{{ post.excerpt | strip_html | truncate:120 }}</p>
-  </a>
+{% for post in site.posts %}
+
+<a href="{{ post.url }}" class="blog-card magnetic">
+<h2>{{ post.title }}</h2>
+
+<p class="date">
+{{ post.date | date: "%d %b %Y" }}
+</p>
+
+<p class="excerpt">
+{{ post.excerpt | strip_html | truncate:120 }}
+</p>
+
+</a>
+
 {% endfor %}
 </div>
 
-<div class="bottom-bar">
-  <button id="btn-home">Home</button>
 </div>
 
+
+<div class="bottom-bar">
+<button id="btn-home">Home</button>
+</div>
+
+
 <script>
+
 (() => {
-  // Cursor
-  const cursor = document.getElementById("cursor");
-  document.addEventListener("mousemove", e => {cursor.style.left=e.clientX+"px";cursor.style.top=e.clientY+"px";});
 
-  // Magnetic hover effect
-  const cards = document.querySelectorAll(".blog-card.magnetic");
-  cards.forEach(card=>{
-    card.addEventListener("mousemove", e=>{
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width/2;
-      const y = e.clientY - rect.top - rect.height/2;
-      card.style.transform = `rotateX(${-y/10}deg) rotateY(${x/10}deg) translateZ(0)`;
-    });
-    card.addEventListener("mouseleave",()=>{card.style.transform=""});
-  });
+const cursor=document.getElementById("cursor");
 
-  // Floating shapes random movement
-  const shapes = document.querySelectorAll('.floating-shape');
-  setInterval(()=>{
-    shapes.forEach(s=>{
-      const x=(Math.random()-0.5)*20;
-      const y=(Math.random()-0.5)*20;
-      const r=(Math.random()-0.5)*10;
-      s.style.transform=`translate(${x}px,${y}px) rotate(${r}deg)`;
-    });
-  },4000);
+document.addEventListener("mousemove",e=>{
+if(cursor){
+cursor.style.left=e.clientX+"px";
+cursor.style.top=e.clientY+"px";
+}
+});
 
-  // Bottom bar Home button
-  const btnHome = document.getElementById('btn-home');
-  btnHome.addEventListener('click', ()=>{ window.location.href = '/'; });
+const cards=document.querySelectorAll(".blog-card");
+
+cards.forEach(card=>{
+
+card.addEventListener("mousemove",e=>{
+const rect=card.getBoundingClientRect();
+
+const x=e.clientX-rect.left-rect.width/2;
+const y=e.clientY-rect.top-rect.height/2;
+
+card.style.transform=
+`rotateX(${-y/10}deg) rotateY(${x/10}deg)`;
+});
+
+card.addEventListener("mouseleave",()=>{
+card.style.transform="";
+});
+
+});
+
+const btnHome=document.getElementById("btn-home");
+
+btnHome.addEventListener("click",()=>{
+window.location.href="/";
+});
+
 })();
+
 </script>
