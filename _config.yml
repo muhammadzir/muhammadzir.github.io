@@ -2,7 +2,7 @@ title: "Zir"
 url: "https://zir.is-a.dev"
 baseurl: "/blog"
 
-theme: chirpy
+theme: minima
 
 plugins:
   - jekyll-feed
