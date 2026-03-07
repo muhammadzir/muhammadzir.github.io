@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O.R.D.A.L BIOMETRIC SYSTEM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background-color: #0a0a0a;
+            color: white;
+            overflow: hidden;
+        }
+
+        .scan-line {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #10b981;
+            box-shadow: 0 0 15px #10b981;
+            z-index: 20;
+            animation: scan 1.5s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { top: 0%; }
+            100% { top: 100%; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #10b981;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-6">
+
+    <!-- Background Grid -->
+    <div class="fixed inset-0 opacity-10 pointer-events-none" 
+         style="background-image: radial-gradient(#00ff00 1px, transparent 1px); background-size: 30px 30px;"></div>
+
+    <div class="relative z-10 w-full max-w-md flex flex-col items-center text-center">
+        
+        <!-- Header Status -->
+        <div id="header-status" class="mb-6 h-16 flex items-center justify-center fade-in">
+            <h1 id="status-text" class="text-xl md:text-2xl font-bold tracking-tighter text-emerald-500 uppercase text-center px-4">
+                Tahan sidik jari untuk memindai privilese.
+            </h1>
+        </div>
+
+        <!-- Main Scanner Area -->
+        <div class="relative mb-8">
+            <div id="scanner-btn" class="relative w-40 h-40 rounded-3xl border-2 border-zinc-800 bg-zinc-900/50 flex items-center justify-center cursor-pointer transition-all duration-500 hover:scale-105 active:scale-95">
+                <i data-lucide="fingerprint" id="fingerprint-icon" class="w-24 h-24 text-zinc-600 transition-colors duration-500"></i>
+                <div id="scan-line" class="scan-line hidden"></div>
+                <div id="result-overlay" class="absolute inset-0 flex items-center justify-center bg-black/40 rounded-3xl hidden">
+                    <i data-lucide="alert-circle" class="w-16 h-16 text-red-500"></i>
+                </div>
+            </div>
+
+            <p id="idle-instruction" class="absolute -bottom-8 left-0 right-0 text-xs text-zinc-500 text-center pulse">
+                tekan tombol sidik jari di atas agak lama
+            </p>
+        </div>
+
+        <!-- Result Content -->
+        <div id="result-content" class="flex flex-col items-center space-y-4 hidden fade-in">
+            <div class="bg-red-500/10 border border-red-500/30 p-6 rounded-[2rem] text-center shadow-[inset_0_0_20px_rgba(239,68,68,0.05)]">
+                <h2 class="text-red-500 font-black text-2xl mb-2 tracking-tighter uppercase">STATUS: BEBAN KELUARGA</h2>
+                <p class="text-zinc-300 text-base leading-relaxed font-medium">
+                    Sistem menolak memindai. Daripada nyari orang dalam, mending kamu mandi dulu sana, bangunnya kesiangan terus.
+                </p>
+            </div>
+
+            <div class="flex flex-col w-full gap-2">
+                <button onclick="resetApp()" class="w-full py-3 bg-zinc-800 hover:bg-zinc-700 text-white rounded-xl font-bold transition-all active:scale-95">
+                    SCAN ULANG REALITA
+                </button>
+                <button onclick="showForm()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold transition-all active:scale-95 shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+                    GUNAKAN JALUR BELAKANG
+                </button>
+            </div>
+        </div>
+
+        <!-- Jalur Belakang Form Popup -->
+        <div id="form-popup" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/90 backdrop-blur-md hidden fade-in">
+            <div class="bg-zinc-900 border border-emerald-500/30 w-full max-w-md rounded-[2.5rem] p-10 shadow-[0_0_50px_rgba(16,185,129,0.1)]">
+                <div class="flex flex-col items-center mb-8">
+                    <div class="relative">
+                        <div class="w-20 h-20 bg-emerald-500/10 rounded-full flex items-center justify-center mb-6 border border-emerald-500/20">
+                            <i data-lucide="dollar-sign" class="w-10 h-10 text-emerald-500"></i>
+                        </div>
+                        <div class="absolute -top-1 -right-1 bg-red-500 rounded-full p-1.5 border-4 border-zinc-900">
+                            <i data-lucide="shield-alert" class="w-4 h-4 text-white"></i>
+                        </div>
+                    </div>
+                    <h2 class="text-emerald-500 font-black text-3xl uppercase tracking-tighter">Jalur Belakang</h2>
+                    <div class="h-1 w-12 bg-emerald-500 mt-2 rounded-full"></div>
+                </div>
+                
+                <div class="text-center mb-10">
+                    <p class="text-zinc-300 text-lg font-medium mb-2">Masukan nominal pelicin</p>
+                    <p class="text-emerald-500/60 text-sm font-bold uppercase tracking-widest mb-4">Minimal Rp 10.000.000</p>
+                    <p class="text-zinc-500 text-xs italic">"Semakin banyak kamu transfer, semakin besar juga kesempatan kamu"</p>
+                </div>
+
+                <div class="relative mb-6">
+                    <div class="absolute left-5 top-1/2 -translate-y-1/2 text-emerald-500 font-bold text-xl">Rp</div>
+                    <input id="nominal-input" type="number" placeholder="000.000.000" class="w-full bg-black/50 border-2 border-zinc-800 rounded-2xl py-6 pl-16 pr-6 text-emerald-400 font-black text-2xl focus:outline-none focus:border-emerald-500 transition-all placeholder:text-zinc-800">
+                </div>
+
+                <p id="form-error" class="text-red-500 text-xs font-bold mb-6 text-center uppercase tracking-tighter hidden"></p>
+
+                <div class="grid grid-cols-2 gap-5">
+                    <button onclick="hideForm()" class="py-5 bg-zinc-800 hover:bg-zinc-700 text-zinc-400 rounded-2xl font-bold text-lg transition-all active:scale-95">BATAL</button>
+                    <button onclick="startTransfer()" class="py-5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl font-black text-lg transition-all active:scale-95 shadow-[0_10px_30px_rgba(16,185,129,0.3)]">TRANSFER</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transferring Loading Popup -->
+        <div id="transferring-popup" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/95 backdrop-blur-md hidden">
+            <div class="flex flex-col items-center text-center">
+                <h2 class="text-emerald-500 font-bold text-2xl mb-12 tracking-[0.3em] uppercase">JALUR BELAKANG</h2>
+                <i data-lucide="loader-2" class="w-16 h-16 text-emerald-500 animate-spin mb-8"></i>
+                <p id="transfer-msg" class="text-zinc-400 font-medium">Menghubungi calo pusat...</p>
+            </div>
+        </div>
+
+        <!-- Transfer Result Popup -->
+        <div id="transfer-result-popup" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/95 backdrop-blur-md hidden fade-in">
+            <div class="bg-zinc-900 border border-red-900/50 w-full max-w-md rounded-3xl p-10 shadow-[0_0_50px_rgba(239,68,68,0.1)]">
+                <h2 class="text-red-500 font-black text-2xl mb-6 uppercase tracking-tighter">Transaksi Ditolak</h2>
+                
+                <div class="bg-black/60 border border-red-500/30 p-8 rounded-[2rem] mb-10 shadow-[inset_0_0_20px_rgba(239,68,68,0.05)]">
+                    <p class="text-red-500 font-black text-xl mb-4 tracking-widest uppercase">ERROR 402: KEMISKINAN TERDETEKSI</p>
+                    <p class="text-zinc-300 text-lg leading-relaxed tracking-tight font-medium">
+                        Jangankan buat nyogok server, saldo di ATM anda saja sering dibawah batas minimum pemotongan admin bulanan. 
+                        <span class="block mt-4 text-zinc-500 text-sm italic">Silahkan tutup aplikasi ini dan kembali fokus ngumpulin koin shopee.</span>
+                    </p>
+                </div>
+
+                <button onclick="resetApp()" class="w-full py-4 bg-red-600 hover:bg-red-500 text-white rounded-xl font-black transition-all active:scale-95 shadow-[0_0_20px_rgba(239,68,68,0.2)]">Sadar Diri</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer Branding -->
+    <div class="absolute bottom-8 left-0 right-0 text-center space-y-2">
+        <p class="text-[10px] text-zinc-500 uppercase tracking-[0.5em] font-bold">O.R.D.A.L BIOMETRIC SYSTEM v1.0.4</p>
+        <p class="text-[9px] text-zinc-600 uppercase tracking-[0.2em] font-medium">© <span id="year"></span> Created by Muhammad Zir</p>
+    </div>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Set current year
+        document.getElementById('year').innerText = new Date().getFullYear();
+
+        // Constants
+        const SCAN_MESSAGES = [
+            "Memindai NIK KTP...",
+            "Mencari Relasi penjabat di konoha...",
+            "Mengecek saldo rekening bapak...",
+            "Menganalisis mutasi Paylater...",
+            "Memverifikasi 'Dekengan Pusat'...",
+            "Mencari pamong praja di group wa keluarga..."
+        ];
+
+        const TRANSFER_MESSAGES = [
+            "Menghubungi calo pusat...",
+            "Mengenkripsi transaksi gelap..."
+        ];
+
+        // Elements
+        const statusText = document.getElementById('status-text');
+        const scannerBtn = document.getElementById('scanner-btn');
+        const fingerprintIcon = document.getElementById('fingerprint-icon');
+        const scanLine = document.getElementById('scan-line');
+        const resultOverlay = document.getElementById('result-overlay');
+        const idleInstruction = document.getElementById('idle-instruction');
+        const resultContent = document.getElementById('result-content');
+        const formPopup = document.getElementById('form-popup');
+        const transferringPopup = document.getElementById('transferring-popup');
+        const transferResultPopup = document.getElementById('transfer-result-popup');
+        const nominalInput = document.getElementById('nominal-input');
+        const formError = document.getElementById('form-error');
+        const transferMsg = document.getElementById('transfer-msg');
+
+        let isScanning = false;
+
+        // Functions
+        function startScan() {
+            if (isScanning) return;
+            isScanning = true;
+
+            // UI Changes
+            scannerBtn.classList.add('border-emerald-500', 'bg-emerald-500/10', 'shadow-[0_0_30px_rgba(16,185,129,0.3)]');
+            scannerBtn.classList.remove('border-zinc-800', 'bg-zinc-900/50');
+            fingerprintIcon.classList.add('text-emerald-400');
+            fingerprintIcon.classList.remove('text-zinc-600');
+            scanLine.classList.remove('hidden');
+            idleInstruction.classList.add('hidden');
+
+            let index = 0;
+            const interval = setInterval(() => {
+                statusText.innerText = SCAN_MESSAGES[index];
+                index++;
+                if (index >= SCAN_MESSAGES.length) {
+                    clearInterval(interval);
+                    setTimeout(showResult, 1000);
+                }
+            }, 2500);
+        }
+
+        function showResult() {
+            isScanning = false;
+            statusText.innerText = "Pemindaian Selesai";
+            scanLine.classList.add('hidden');
+            scannerBtn.classList.add('border-red-500', 'bg-red-500/10');
+            scannerBtn.classList.remove('border-emerald-500', 'bg-emerald-500/10');
+            fingerprintIcon.classList.add('text-red-400');
+            fingerprintIcon.classList.remove('text-emerald-400');
+            resultOverlay.classList.remove('hidden');
+            resultContent.classList.remove('hidden');
+        }
+
+        function resetApp() {
+            isScanning = false;
+            statusText.innerText = "Tahan sidik jari untuk memindai privilese.";
+            scannerBtn.className = "relative w-40 h-40 rounded-3xl border-2 border-zinc-800 bg-zinc-900/50 flex items-center justify-center cursor-pointer transition-all duration-500 hover:scale-105 active:scale-95";
+            fingerprintIcon.className = "w-24 h-24 text-zinc-600 transition-colors duration-500";
+            scanLine.classList.add('hidden');
+            resultOverlay.classList.add('hidden');
+            idleInstruction.classList.remove('hidden');
+            resultContent.classList.add('hidden');
+            formPopup.classList.add('hidden');
+            transferringPopup.classList.add('hidden');
+            transferResultPopup.classList.add('hidden');
+            nominalInput.value = "";
+            formError.classList.add('hidden');
+            lucide.createIcons();
+        }
+
+        function showForm() {
+            formPopup.classList.remove('hidden');
+            statusText.innerText = "PROTOKOL JALUR BELAKANG";
+        }
+
+        function hideForm() {
+            formPopup.classList.add('hidden');
+            statusText.innerText = "Pemindaian Selesai";
+        }
+
+        function startTransfer() {
+            const amount = parseInt(nominalInput.value);
+            if (isNaN(amount) || amount < 10000000) {
+                formError.innerText = "Nominal terlalu kecil! Calo pusat tidak menerima recehan.";
+                formError.classList.remove('hidden');
+                nominalInput.classList.add('border-red-500');
+                return;
+            }
+
+            formPopup.classList.add('hidden');
+            transferringPopup.classList.remove('hidden');
+
+            let index = 0;
+            const interval = setInterval(() => {
+                transferMsg.innerText = TRANSFER_MESSAGES[index];
+                index++;
+                if (index >= TRANSFER_MESSAGES.length) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        transferringPopup.classList.add('hidden');
+                        transferResultPopup.classList.remove('hidden');
+                    }, 2000);
+                }
+            }, 2000);
+        }
+
+        // Event Listeners
+        scannerBtn.addEventListener('click', startScan);
+        nominalInput.addEventListener('input', () => {
+            formError.classList.add('hidden');
+            nominalInput.classList.remove('border-red-500');
+        });
+
+    </script>
+</body>
+</html>
